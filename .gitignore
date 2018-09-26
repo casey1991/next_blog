@@ -1,0 +1,9 @@
+# ignore node_modules
+node_modules/
+# ignore .next
+.next/
+
+# ignore package-lock & yarn.lock & yarn-error
+yarn.lock
+package-lock.json
+yarn-error.log
