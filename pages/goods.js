@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Layout from "../components/Layout";
-import { GoodsList } from "../containers/graphql";
+import { GoodsList, GoodsCreate } from "../containers/graphql";
 
 export default class Page extends Component {
   static async getInitialProps(props) {
@@ -12,6 +12,7 @@ export default class Page extends Component {
   render() {
     return (
       <Layout>
+        <GoodsCreate />
         <GoodsList />
       </Layout>
     );

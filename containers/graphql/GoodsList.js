@@ -23,7 +23,7 @@ export default class GoodsList extends Component {
           return (
             <ul>
               {data.goodss.map(goods => {
-                return <li> {goods.name}</li>;
+                return <li key={goods.id}> {goods.name}</li>;
               })}
             </ul>
           );
