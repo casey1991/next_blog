@@ -8,12 +8,14 @@ import {
   Menu
 } from "semantic-ui-react";
 import Heading from "./heading";
+import SigninModal from "./signin.modal";
 
 class DesktopContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fixed: false
+      fixed: false,
+      signinModalVisible: false
     };
   }
   _showFixedMenu = () => {
@@ -26,9 +28,15 @@ class DesktopContainer extends Component {
       fixed: false
     });
   };
+  _toggleSignin = () => {
+    this.setState({
+      signinModalVisible: !this.state.signinModalVisible
+    });
+  };
   render() {
     const { children } = this.props;
-    const { fixed } = this.state;
+    const { fixed, signinModalVisible } = this.state;
+    const { _toggleSignin } = this;
     return (
       <div>
         <Responsive minWidth={700} fireOnMount>
@@ -59,7 +67,7 @@ class DesktopContainer extends Component {
                   <Menu.Item as="a">Careers</Menu.Item>
                   <Menu.Item position="right">
                     {" "}
-                    <Button as="a" inverted={!fixed}>
+                    <Button as="a" inverted={!fixed} onClick={_toggleSignin}>
                       Log in
                     </Button>
                     <Button
@@ -74,6 +82,7 @@ class DesktopContainer extends Component {
                 </Container>
               </Menu>
               <Heading />
+              <SigninModal open={signinModalVisible} onClose={_toggleSignin} />
             </Segment>
           </Visibility>
           {children}
