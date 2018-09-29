@@ -4,7 +4,10 @@ import Signin from "../../containers/graphql/Signin";
 
 const SigninModal = props => (
   <Modal {...props}>
-    <Signin />
+    <Modal.Header>Sign in</Modal.Header>
+    <Modal.Content>
+      <Signin />
+    </Modal.Content>
   </Modal>
 );
 
