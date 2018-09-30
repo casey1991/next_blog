@@ -29,17 +29,18 @@ export default class AuthMenu extends Component {
     const { fixed, onSigninClicked } = this.props;
     return (
       <Query query={QUERY_USER_PROFILE} pollInterval={1000}>
-        {({ loading, error, data: { user } }) => {
+        {({ loading, error, data }) => {
+          const authed = data && data.user ? true : false;
           return (
             <Menu.Item position="right">
-              {user ? (
+              {authed ? (
                 <div>
                   <Image
                     src="/static/img/home_bg.jpg"
                     avatar
                     style={{ marginLeft: "0.5em" }}
                   />
-                  {upperCase(user.name)}
+                  {upperCase(data.user.name)}
                 </div>
               ) : (
                 <div>
