@@ -6,7 +6,7 @@ import { Query } from "react-apollo";
 import { upperCase } from "lodash";
 export const QUERY_USER_PROFILE = ggl`
   {
-      user{
+      currentUser{
         id
         name
       }
@@ -30,7 +30,7 @@ export default class AuthMenu extends Component {
     return (
       <Query query={QUERY_USER_PROFILE} pollInterval={1000}>
         {({ loading, error, data }) => {
-          const authed = data && data.user ? true : false;
+          const authed = data && data.currentUser ? true : false;
           return (
             <Menu.Item position="right">
               {authed ? (
@@ -40,7 +40,7 @@ export default class AuthMenu extends Component {
                     avatar
                     style={{ marginLeft: "0.5em" }}
                   />
-                  {upperCase(data.user.name)}
+                  {upperCase(data.currentUser.name)}
                 </div>
               ) : (
                 <div>
