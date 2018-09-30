@@ -3,14 +3,7 @@ import ggl from "graphql-tag";
 import { Mutation } from "react-apollo";
 import cookie from "cookie";
 import { Button, Checkbox, Form, Input } from "semantic-ui-react";
-const graphqlGGL = ggl`
-    mutation createToken($email: String!,$password:String!) {
-        createToken(email: $email,password:$password) {
-            access_token
-        }
-    }
-`;
-
+import { CREATE_TOKEN } from "../../graphql";
 export default class Signin extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +16,7 @@ export default class Signin extends Component {
     const { email, password } = this.state;
     return (
       <Mutation
-        mutation={graphqlGGL}
+        mutation={CREATE_TOKEN}
         onCompleted={({ createToken }) => {
           const token = createToken.access_token;
           document.cookie = cookie.serialize("token", token, {

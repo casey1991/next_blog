@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import ggl from "graphql-tag";
 import { Query } from "react-apollo";
-const graphqlGGL = ggl`
-  {
-    goodss{
-      id
-      name
-    }
-  }
-`;
+import { GOODSS } from "../../graphql";
 export default class GoodsList extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +9,7 @@ export default class GoodsList extends Component {
 
   render() {
     return (
-      <Query query={graphqlGGL}>
+      <Query query={GOODSS}>
         {({ loading, error, data }) => {
           if (loading) return "Loading...";
           if (error) return `Error! ${error.message}`;
