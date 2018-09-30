@@ -1,6 +1,6 @@
 import App, { Container } from "next/app";
 import React from "react";
-import withApolloClient from "../lib/with-apollo-client";
+import { withApolloClient } from "../lib/graphql";
 import { ApolloProvider } from "react-apollo";
 
 class CApp extends App {
