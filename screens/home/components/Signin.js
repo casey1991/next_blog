@@ -60,7 +60,7 @@ export default compose(
     name: "createToken",
     options: {
       awaitRefetchQueries: true,
-      refetchQueries: ["currentUser"],
+      refetchQueries: [{ query: QUERY_CURRENT_USER }],
       update: (proxy, { data: { createToken } }) => {
         document.cookie = cookie.serialize("token", createToken.access_token, {
           maxAge: 30 * 24 * 60 * 60 // 30 days

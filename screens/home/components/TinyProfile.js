@@ -55,9 +55,13 @@ class TinyProfile extends Component {
 export default compose(
   graphql(QUERY_CURRENT_USER, {
     props: ({ data }) => {
+      console.log(data);
       return {
         user: data.currentUser
       };
+    },
+    options: {
+      fetchPolicy: "network-only"
     }
   })
 )(TinyProfile);
