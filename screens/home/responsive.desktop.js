@@ -9,7 +9,7 @@ import {
 } from "semantic-ui-react";
 import Heading from "./heading";
 import SigninModal from "./signin.modal";
-import AuthMenu from "./containers/AuthMenu";
+import TinyProfile from "./components/TinyProfile";
 
 class DesktopContainer extends Component {
   constructor(props) {
@@ -66,7 +66,7 @@ class DesktopContainer extends Component {
                   <Menu.Item as="a">Work</Menu.Item>
                   <Menu.Item as="a">Company</Menu.Item>
                   <Menu.Item as="a">Careers</Menu.Item>
-                  <AuthMenu fixed={fixed} onSigninClicked={_toggleSignin} />
+                  <TinyProfile fixed={fixed} onClick={_toggleSignin} />
                 </Container>
               </Menu>
               <Heading />

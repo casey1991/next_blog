@@ -22,7 +22,6 @@ export default class Signin extends Component {
           document.cookie = cookie.serialize("token", token, {
             maxAge: 30 * 24 * 60 * 60 // 30 days
           });
-          console.log(cookie.parse(document.cookie).token);
         }}
       >
         {(createToken, { data }) => (

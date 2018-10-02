@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal } from "semantic-ui-react";
-import Signin from "../../containers/graphql/Signin";
+import Signin from "./components/Signin";
 
 const SigninModal = props => (
   <Modal {...props}>
