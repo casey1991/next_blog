@@ -1,20 +1,23 @@
 import App, { Container } from "next/app";
+import { Provider } from "react-redux";
 import React from "react";
 import { withApolloClient } from "../lib/graphql";
 import { ApolloProvider } from "react-apollo";
+import withReduxSaga from "../lib/redux/withReduxSaga";
 
 class CApp extends App {
   render() {
-    const { Component, pageProps, apolloClient } = this.props;
-
+    const { Component, pageProps, apolloClient, store } = this.props;
     return (
       <Container>
-        <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
-        </ApolloProvider>
+        <Provider store={store}>
+          <ApolloProvider client={apolloClient}>
+            <Component {...pageProps} />
+          </ApolloProvider>
+        </Provider>
       </Container>
     );
   }
 }
 
-export default withApolloClient(CApp);
+export default withReduxSaga(withApolloClient(CApp));
