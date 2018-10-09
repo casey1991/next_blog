@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button, Checkbox, Form, Input } from "semantic-ui-react";
-import { compose, graphql } from "react-apollo";
-import { QUERY_CURRENT_USER, MUTATION_CREATE_TOKEN } from "../../../graphql";
-import cookie from "cookie";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Actions as AuthActions } from "../../../lib/redux/Auth/actions";
 
 class Signin extends Component {
   constructor(props) {
@@ -14,15 +14,13 @@ class Signin extends Component {
   }
 
   render() {
-    const { createToken } = this.props;
+    const { login } = this.props;
     const { email, password } = this.state;
     return (
       <Form
         onSubmit={e => {
           e.preventDefault();
-          createToken({
-            variables: { email: email, password: password }
-          });
+          login({ email, password });
         }}
       >
         <Form.Field>
@@ -55,17 +53,15 @@ class Signin extends Component {
     );
   }
 }
-export default compose(
-  graphql(MUTATION_CREATE_TOKEN, {
-    name: "createToken",
-    options: {
-      awaitRefetchQueries: true,
-      refetchQueries: [{ query: QUERY_CURRENT_USER }],
-      update: (proxy, { data: { createToken } }) => {
-        document.cookie = cookie.serialize("token", createToken.access_token, {
-          maxAge: 30 * 24 * 60 * 60 // 30 days
-        });
-      }
-    }
-  })
+const mapStateToProps = state => ({ token: state.auth.token });
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      login: AuthActions.login
+    },
+    dispatch
+  );
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(Signin);
