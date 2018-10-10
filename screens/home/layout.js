@@ -1,11 +1,3 @@
-import {
-  Container,
-  Button,
-  Responsive,
-  Visibility,
-  Segment,
-  Menu
-} from "semantic-ui-react";
 import React from "react";
 import Footer from "./footer";
 import Show1 from "./show1";

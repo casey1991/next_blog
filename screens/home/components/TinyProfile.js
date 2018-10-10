@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "next/router";
 import { Menu, Button, Image } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { upperCase } from "lodash";
@@ -18,9 +19,13 @@ class TinyProfile extends Component {
   constructor(props) {
     super(props);
   }
-
+  _jumpLogin = () => {
+    const { router } = this.props;
+    router.push("/login");
+  };
   render() {
-    const { fixed, onClick, user } = this.props;
+    const { fixed, user } = this.props;
+    const { _jumpLogin } = this;
     return (
       <Menu.Item position="right">
         {user ? (
@@ -34,7 +39,7 @@ class TinyProfile extends Component {
           </div>
         ) : (
           <div>
-            <Button as="a" inverted={!fixed} onClick={onClick}>
+            <Button as="a" inverted={!fixed} onClick={_jumpLogin}>
               Log in
             </Button>
             <Button
@@ -55,7 +60,6 @@ class TinyProfile extends Component {
 export default compose(
   graphql(QUERY_CURRENT_USER, {
     props: ({ data }) => {
-      console.log(data);
       return {
         user: data.currentUser
       };
@@ -63,5 +67,6 @@ export default compose(
     options: {
       fetchPolicy: "network-only"
     }
-  })
+  }),
+  withRouter
 )(TinyProfile);
