@@ -19,13 +19,14 @@ export default class Sender extends Component {
   }
   _onSubmit = () => {
     const { onSubmit } = this.props;
-    onSubmit(value);
+    onSubmit(this.state.value);
     this._clear();
   };
   _clear = () => {
     this.setState({
       value: null
     });
+    this._input.current.inputRef.value = null;
   };
   render() {
     return (
