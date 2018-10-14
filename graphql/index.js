@@ -6,12 +6,44 @@ export const MUTATION_CREATE_TOKEN = ggl`
     }
   }
 `;
+export const MUTATION_CREATE_MESSAGE = ggl`
+  mutation createMessage($roomId:String!,$text:String,$type:Int!){
+    createMessage(roomId:$roomId,text:$text,type:$type){
+      id
+      text
+      user{
+        id
+        name
+      }
+    }
+  }
+`;
 export const QUERY_CURRENT_USER = ggl`
   {
     currentUser{
         id
         name
       }
+  }
+`;
+export const QUERY_ROOMS = ggl`
+  {
+    rooms{
+      id
+      name
+    }
+  }
+`;
+export const QUERY_MESSAGES = ggl`
+  query messages($roomId:String!){
+    messages(roomId:$roomId){
+      id
+      text
+      user{
+        id
+        name
+      }
+    }
   }
 `;
 export const GOODSS = ggl`
