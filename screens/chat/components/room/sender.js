@@ -34,10 +34,9 @@ export default class Sender extends Component {
         ref={this._input}
         placeholder="send something..."
         fluid
-        onChange={({ nativeEvent: { data } }) => {
-          const value = trim(data);
+        onChange={(event, { value }) => {
           this.setState({
-            value: isNull(value) || isEmpty(value) ? null : value
+            value: isNull(trim(value)) || isEmpty(trim(value)) ? null : value
           });
         }}
         action={{
