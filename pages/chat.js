@@ -16,14 +16,19 @@ class Chat extends React.Component {
     };
   }
   _renderGroups = () => {
-    const { rooms } = this.props;
+    const { rooms, loadMessages } = this.props;
     return (
       <Rooms
         rooms={rooms}
         onItemClick={room => {
-          this.setState({
-            room: room
-          });
+          this.setState(
+            {
+              room: room
+            },
+            () => {
+              loadMessages({ roomId: this.state.room });
+            }
+          );
         }}
       />
     );
@@ -106,6 +111,7 @@ export default compose(
     },
     props: ({ data }) => {
       return {
+        loadMessages: data.refetch,
         messages: data.messages
       };
     }
