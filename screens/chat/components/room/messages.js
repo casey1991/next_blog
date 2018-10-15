@@ -1,45 +1,51 @@
 import React, { Component } from "react";
-import { Container, Header } from "semantic-ui-react";
+import { List } from "semantic-ui-react";
 import PropTypes from "prop-types";
-import Sender from "./sender";
-
-export default class Room extends Component {
+import md5 from "md5";
+import { map } from "lodash";
+import Message from "./message";
+export default class Messages extends Component {
   static propTypes = {
-    onItemClicked: PropTypes.func,
-    renderSender: PropTypes.func
+    messages: PropTypes.array
   };
   static defaultProps = {
-    onItemClicked: () => {}
+    messages: []
   };
   constructor(props) {
     super(props);
+    this.state = {
+      messages: this._prepareMessages(props.messages)
+    };
   }
-
+  componentDidUpdate = prevProps => {
+    const { messages: prevMessages } = prevProps;
+    const { messages: currentMessages } = this.props;
+    if (prevMessages === currentMessages) return;
+    this.setState({
+      messages: this._prepareMessages(currentMessages)
+    });
+  };
+  _prepareMessages(messages) {
+    let result = [];
+    result = messages.map((message, index) => {
+      const previousMessage = messages[index + 1] || {};
+      const nextMessage = messages[index - 1] || {};
+      const toHash =
+        JSON.stringify(message) + previousMessage._id + nextMessage._id;
+      return { ...message, previousMessage, nextMessage, key: md5(toHash) };
+    });
+    return result;
+  }
+  _renderItem = message => {
+    return <Message message={message} key={message.id} />;
+  };
   render() {
-    const { renderSender } = this.props;
     return (
-      <Container fluid>
-        <Header as="h2">Dogs Roles with Humans</Header>
-        <p>
-          Domestic dogs inherited complex behaviors, such as bite inhibition,
-          from their wolf ancestors, which would have been pack hunters with
-          complex body language. These sophisticated forms of social cognition
-          and communication may account for their trainability, playfulness, and
-          ability to fit into human households and social situations, and these
-          attributes have given dogs a relationship with humans that has enabled
-          them to become one of the most successful species on the planet today.
-        </p>
-        <p>
-          The dogs' value to early human hunter-gatherers led to them quickly
-          becoming ubiquitous across world cultures. Dogs perform many roles for
-          people, such as hunting, herding, pulling loads, protection, assisting
-          police and military, companionship, and, more recently, aiding
-          handicapped individuals. This impact on human society has given them
-          the nickname "man's best friend" in the Western world. In some
-          cultures, however, dogs are also a source of meat.
-        </p>
-        {renderSender ? renderSender() : <Sender />}
-      </Container>
+      <List divided relaxed>
+        {map(this.state.messages, message => {
+          return this._renderItem(message);
+        })}
+      </List>
     );
   }
 }
