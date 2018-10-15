@@ -15,6 +15,7 @@ export const MUTATION_CREATE_MESSAGE = ggl`
         id
         name
       }
+      status
     }
   }
 `;
@@ -43,6 +44,7 @@ export const QUERY_MESSAGES = ggl`
         id
         name
       }
+      status
     }
   }
 `;

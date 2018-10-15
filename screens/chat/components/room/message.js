@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Image } from "semantic-ui-react";
+import { List, Image, Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 export default class Message extends Component {
@@ -25,6 +25,11 @@ export default class Message extends Component {
           <List.Header as="a">{message.user.name}</List.Header>
           <List.Description>{message.text}</List.Description>
         </List.Content>
+        {message.status === "SENDING" ? (
+          <List.Content floated="right">
+            <Icon loading name="spinner" />
+          </List.Content>
+        ) : null}
       </List.Item>
     );
   }

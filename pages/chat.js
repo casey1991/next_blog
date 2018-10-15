@@ -38,6 +38,7 @@ class Chat extends React.Component {
                       name: "casey",
                       __typename: "User"
                     },
+                    status: "SENDING",
                     __typename: "Message"
                   }
                 },
