@@ -12,7 +12,7 @@ class Chat extends React.Component {
     super(props);
     const firstRoom = props.rooms[0];
     this.state = {
-      room: firstRoom.id || null
+      room: firstRoom ? firstRoom.id : null
     };
   }
   _renderGroups = () => {
@@ -105,7 +105,7 @@ export default compose(
       const firstRoom = rooms[0];
       return {
         variables: {
-          roomId: firstRoom.id || null
+          roomId: firstRoom ? firstRoom.id : null
         }
       };
     },
