@@ -17,7 +17,6 @@ export default class Layout extends Component {
 
   render() {
     const { renderGroups, renderRoom } = this.props;
-    console.log(this.props);
     return (
       <Container fluid>
         <Grid container>

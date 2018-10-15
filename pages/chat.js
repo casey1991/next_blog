@@ -10,13 +10,27 @@ import {
 class Chat extends React.Component {
   constructor(props) {
     super(props);
+    const firstRoom = props.rooms[0];
+    this.state = {
+      room: firstRoom.id || null
+    };
   }
   _renderGroups = () => {
     const { rooms } = this.props;
-    return <Rooms rooms={rooms} />;
+    return (
+      <Rooms
+        rooms={rooms}
+        onItemClick={room => {
+          this.setState({
+            room: room
+          });
+        }}
+      />
+    );
   };
   _renderRoom = () => {
     const { messages, createMessage } = this.props;
+    const { room } = this.state;
     return (
       <Room
         messages={messages}
@@ -25,7 +39,7 @@ class Chat extends React.Component {
             onSubmit={value => {
               createMessage({
                 variables: {
-                  roomId: "5bc2bdc555270939e13d0716",
+                  roomId: room,
                   text: value,
                   type: 1
                 },
@@ -46,18 +60,17 @@ class Chat extends React.Component {
                   const data = proxy.readQuery({
                     query: QUERY_MESSAGES,
                     variables: {
-                      roomId: "5bc2bdc555270939e13d0716"
+                      roomId: room
                     }
                   });
                   data.messages.push(createMessage);
                   proxy.writeQuery({
                     query: QUERY_MESSAGES,
                     variables: {
-                      roomId: "5bc2bdc555270939e13d0716"
+                      roomId: room
                     },
                     data
                   });
-                  console.log(data);
                 }
               });
             }}
@@ -74,21 +87,7 @@ class Chat extends React.Component {
 }
 
 export default compose(
-  graphql(MUTATION_CREATE_MESSAGE, {
-    name: "createMessage"
-  }),
-  graphql(QUERY_MESSAGES, {
-    options: {
-      variables: {
-        roomId: "5bc2bdc555270939e13d0716"
-      }
-    },
-    props: ({ data }) => {
-      return {
-        messages: data.messages
-      };
-    }
-  }),
+  withRouter,
   graphql(QUERY_ROOMS, {
     props: ({ data }) => {
       return {
@@ -96,5 +95,22 @@ export default compose(
       };
     }
   }),
-  withRouter
+  graphql(QUERY_MESSAGES, {
+    options: ({ rooms }) => {
+      const firstRoom = rooms[0];
+      return {
+        variables: {
+          roomId: firstRoom.id || null
+        }
+      };
+    },
+    props: ({ data }) => {
+      return {
+        messages: data.messages
+      };
+    }
+  }),
+  graphql(MUTATION_CREATE_MESSAGE, {
+    name: "createMessage"
+  })
 )(Chat);

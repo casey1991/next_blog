@@ -7,22 +7,22 @@ export default class Rooms extends Component {
   static propTypes = {
     rooms: PropTypes.array,
     renderItem: PropTypes.func,
-    onItemClicked: PropTypes.func
+    onItemClick: PropTypes.func
   };
   static defaultProps = {
     renderItem: () => {},
-    onItemClicked: () => {}
+    onItemClick: () => {}
   };
   constructor(props) {
     super(props);
   }
   _renderItem = room => {
-    const { onItemClicked } = this.props;
+    const { onItemClick } = this.props;
     return (
       <List.Item
         key={room.id}
         onClick={() => {
-          onItemClicked(room.id);
+          onItemClick(room.id);
         }}
       >
         <Image avatar src="/static/img/home_bg.jpg" />
