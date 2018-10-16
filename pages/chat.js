@@ -58,6 +58,9 @@ class Chat extends React.Component {
       }
     });
   };
+  /**
+   * sub renders
+   */
   _renderGroups = () => {
     const { rooms, loadMessages } = this.props;
     return (
