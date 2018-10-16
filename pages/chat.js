@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "next/router";
 import { compose, graphql } from "react-apollo";
+import { hasIn } from "lodash";
 import { Layout, Rooms, Room } from "../screens/chat";
 import {
   QUERY_ROOMS,
@@ -10,11 +11,53 @@ import {
 class Chat extends React.Component {
   constructor(props) {
     super(props);
-    const firstRoom = props.rooms[0];
     this.state = {
-      room: firstRoom ? firstRoom.id : null
+      selectedRoom: props.selectedRoom
     };
   }
+  /**
+   * actions
+   */
+  _onSend = value => {
+    const { createMessage } = this.props;
+    const { selectedRoom } = this.state;
+    createMessage({
+      variables: {
+        roomId: selectedRoom,
+        text: value,
+        type: 1
+      },
+      optimisticResponse: {
+        createMessage: {
+          id: -1,
+          text: value,
+          user: {
+            id: "5ba5023ed9a8324dcddfa078",
+            name: "casey",
+            __typename: "User"
+          },
+          status: "SENDING",
+          __typename: "Message"
+        }
+      },
+      update: (proxy, { data: { createMessage } }) => {
+        const data = proxy.readQuery({
+          query: QUERY_MESSAGES,
+          variables: {
+            roomId: selectedRoom
+          }
+        });
+        data.messages.push(createMessage);
+        proxy.writeQuery({
+          query: QUERY_MESSAGES,
+          variables: {
+            roomId: selectedRoom
+          },
+          data
+        });
+      }
+    });
+  };
   _renderGroups = () => {
     const { rooms, loadMessages } = this.props;
     return (
@@ -23,10 +66,10 @@ class Chat extends React.Component {
         onItemClick={room => {
           this.setState(
             {
-              room: room
+              selectedRoom: room
             },
             () => {
-              loadMessages({ roomId: this.state.room });
+              loadMessages({ roomId: this.state.selectedRoom });
             }
           );
         }}
@@ -34,53 +77,12 @@ class Chat extends React.Component {
     );
   };
   _renderRoom = () => {
-    const { messages, createMessage } = this.props;
-    const { room } = this.state;
+    const { messages } = this.props;
+    const {} = this.state;
     return (
       <Room
         messages={messages}
-        renderSender={() => (
-          <Room.Sender
-            onSubmit={value => {
-              createMessage({
-                variables: {
-                  roomId: room,
-                  text: value,
-                  type: 1
-                },
-                optimisticResponse: {
-                  createMessage: {
-                    id: -1,
-                    text: value,
-                    user: {
-                      id: "5ba5023ed9a8324dcddfa078",
-                      name: "casey",
-                      __typename: "User"
-                    },
-                    status: "SENDING",
-                    __typename: "Message"
-                  }
-                },
-                update: (proxy, { data: { createMessage } }) => {
-                  const data = proxy.readQuery({
-                    query: QUERY_MESSAGES,
-                    variables: {
-                      roomId: room
-                    }
-                  });
-                  data.messages.push(createMessage);
-                  proxy.writeQuery({
-                    query: QUERY_MESSAGES,
-                    variables: {
-                      roomId: room
-                    },
-                    data
-                  });
-                }
-              });
-            }}
-          />
-        )}
+        renderSender={() => <Room.Sender onSubmit={this._onSend} />}
       />
     );
   };
@@ -96,16 +98,16 @@ export default compose(
   graphql(QUERY_ROOMS, {
     props: ({ data }) => {
       return {
-        rooms: data.rooms
+        rooms: data.rooms,
+        selectedRoom: hasIn(data, "rooms[0].id") ? data.rooms[0].id : null
       };
     }
   }),
   graphql(QUERY_MESSAGES, {
-    options: ({ rooms }) => {
-      const firstRoom = rooms[0];
+    options: ({ selectedRoom }) => {
       return {
         variables: {
-          roomId: firstRoom ? firstRoom.id : null
+          roomId: selectedRoom
         }
       };
     },
