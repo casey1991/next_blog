@@ -42,6 +42,7 @@
     "redux-saga": "^0.16.1",
     "seamless-immutable": "^7.1.4",
     "semantic-ui-react": "^0.82.5",
+    "styled-components": "^4.0.0",
     "validator": "^10.8.0"
   }
 }
