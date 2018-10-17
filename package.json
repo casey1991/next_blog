@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "antd": "^3.10.1",
     "apisauce": "^0.16.0",
     "apollo-cache-inmemory": "^1.2.10",
     "apollo-client": "^2.4.2",
@@ -19,6 +20,7 @@
     "apollo-link-error": "^1.1.1",
     "apollo-link-http": "^1.5.5",
     "apollo-link-state": "^0.4.2",
+    "babel-plugin-import": "^1.9.1",
     "cookie": "^0.3.1",
     "express": "^4.16.3",
     "graphql": "^14.0.2",
