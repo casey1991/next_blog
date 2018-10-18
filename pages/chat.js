@@ -3,6 +3,7 @@ import { withRouter } from "next/router";
 import { compose, graphql } from "react-apollo";
 import { hasIn } from "lodash";
 import { Layout, Rooms, Room } from "../screens/chat";
+import { Chat as BBChat } from "../components/chat";
 import {
   QUERY_ROOMS,
   MUTATION_CREATE_MESSAGE,
@@ -91,7 +92,8 @@ class Chat extends React.Component {
   };
   render() {
     return (
-      <Layout renderGroups={this._renderGroups} renderRoom={this._renderRoom} />
+      // <Layout renderGroups={this._renderGroups} renderRoom={this._renderRoom} />
+      <BBChat />
     );
   }
 }
