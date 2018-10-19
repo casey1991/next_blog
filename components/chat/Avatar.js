@@ -44,7 +44,6 @@ const styles = {
   containner: {
     width: 40,
     height: 40,
-    borderRadius: "50%",
-    backgroundColor: Colors.BACKGROUND
+    borderRadius: "50%"
   }
 };

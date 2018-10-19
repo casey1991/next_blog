@@ -5,6 +5,7 @@ import { map } from "lodash";
 import md5 from "md5";
 
 // components
+import ReactList from "react-list";
 import Message from "./Message";
 
 class MessagesContainer extends Component {
@@ -19,6 +20,7 @@ class MessagesContainer extends Component {
     this.state = {
       messages: this._prepareMessages(props.messages)
     };
+    this._list = React.createRef();
   }
   componentDidUpdate = prevProps => {
     const { messages: prevMessages } = prevProps;
@@ -27,6 +29,10 @@ class MessagesContainer extends Component {
     this.setState({
       messages: this._prepareMessages(currentMessages)
     });
+    this._scrollToBottom();
+  };
+  _scrollToBottom = () => {
+    this._list.current.scrollTo(this.state.messages.length);
   };
   _prepareMessages(messages) {
     let result = [];
@@ -39,7 +45,9 @@ class MessagesContainer extends Component {
     });
     return result;
   }
-  _renderItem = message => {
+  _renderItem = index => {
+    const { messages } = this.state;
+    const message = messages[index];
     return (
       <li style={[styles.message]} key={message.id}>
         <Message message={message} />
@@ -62,11 +70,14 @@ class MessagesContainer extends Component {
     const { messages } = this.state;
     return (
       <div style={[styles.container]}>
-        <ul style={[styles.messagesContainer]}>
-          {map(messages, message => {
-            return this._renderItem(message);
-          })}
-        </ul>
+        <div style={[styles.messagesContainer]}>
+          <ReactList
+            ref={this._list}
+            itemRenderer={this._renderItem}
+            length={messages.length}
+            type="uniform"
+          />
+        </div>
       </div>
     );
   }
@@ -77,7 +88,8 @@ const styles = {
   messagesContainer: {
     listStyle: "none",
     padding: 0,
-    margin: 0
+    margin: 0,
+    backgrounndColor: "#303"
   },
   message: {
     display: "block",
