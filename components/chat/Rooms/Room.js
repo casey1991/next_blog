@@ -51,7 +51,7 @@ const styles = {
     }
   },
   active: {
-    backgroundColor: Colors.PRIMARY_DARK
+    backgroundColor: Colors.PRIMARY_LIGHT
   },
   content: {
     display: "flex",
