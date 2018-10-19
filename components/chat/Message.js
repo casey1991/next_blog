@@ -42,8 +42,7 @@ export default Radium(Message);
 const styles = {
   containner: {
     display: "flex",
-    flexDirection: "column",
-    paddingBottom: 10
+    flexDirection: "column"
   },
   avatar: {},
   content: {

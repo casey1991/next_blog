@@ -4,28 +4,45 @@ import Radium from "radium";
 import PropTypes from "prop-types";
 // components
 import MessagesContainer from "./MessagesContainer";
+import ActionBar from "./ActionBar";
+import Sender from "./Sender";
+import { Rooms } from "./Rooms";
 // utils
-import { MessageShape } from "./utils";
+import { MessageShape, UserShape } from "./utils";
+
+// styles
+import { Colors } from "./Themes";
 
 class Chat extends Component {
   static propTypes = {
-    messages: PropTypes.arrayOf(MessageShape)
+    messages: PropTypes.arrayOf(MessageShape),
+    user: UserShape.isRequired,
+    renderActionBar: PropTypes.func
   };
-  static defaultProps = {};
+  static defaultProps = {
+    messages: []
+  };
+  static Sender = Sender;
+  static ActionBar = ActionBar;
   constructor(props) {
     super(props);
   }
 
   render() {
+    const { renderActionBar } = this.props;
     return (
       <div style={[styles.container]}>
-        <div style={[styles.menu]} />
+        <div style={[styles.menu]}>
+          <Rooms />
+        </div>
         <div style={[styles.content]}>
           <div style={[styles.header]} />
           <div style={[styles.subContent]}>
             <MessagesContainer messages={this.props.messages} />
           </div>
-          <div style={[styles.footer]} />
+          <div style={[styles.footer]}>
+            {renderActionBar ? renderActionBar() : <ActionBar />}
+          </div>
         </div>
       </div>
     );
@@ -37,34 +54,30 @@ const styles = {
     position: "absolute",
     display: "flex",
     flexDirection: "row",
-    // backgroundColor: "#303",
     width: "100%",
     height: "100%"
   },
   menu: {
     flex: 3,
     display: "flex",
-    backgroundColor: "#306"
+    backgroundColor: Colors.PRIMARY
   },
   content: {
     flex: 7,
     display: "flex",
     flexDirection: "column"
-    // backgroundColor: "#309"
   },
   header: {
-    height: 60,
+    height: 80,
     backgroundColor: "#401"
   },
   subContent: {
     flex: 1,
     overflow: "auto",
     paddingLeft: 20,
-    paddingRight: 20
-    // backgroundColor: "#403"
+    backgroundColor: "#FFF"
   },
   footer: {
-    height: 60,
-    backgroundColor: "#406"
+    height: 60
   }
 };

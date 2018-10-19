@@ -91,7 +91,23 @@ class Chat extends React.Component {
   };
   render() {
     const { messages } = this.props;
-    return <BBChat messages={messages} />;
+    const { _onSend } = this;
+    return (
+      <BBChat
+        messages={messages}
+        renderActionBar={() => (
+          <BBChat.ActionBar
+            renderSender={() => (
+              <BBChat.Sender
+                onSend={value => {
+                  _onSend(value);
+                }}
+              />
+            )}
+          />
+        )}
+      />
+    );
   }
 }
 

@@ -1,0 +1,8 @@
+const COMMON_MARGINN = 10;
+const COMMON_PADDING = 10;
+const COMMON_RADIUS = 4;
+export default {
+  COMMON_MARGINN,
+  COMMON_PADDING,
+  COMMON_RADIUS
+};
