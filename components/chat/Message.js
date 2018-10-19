@@ -7,6 +7,8 @@ import Avatar from "./Avatar";
 import Bubble from "./Bubble";
 import Name from "./Name";
 
+// others
+
 class Message extends Component {
   static propTypes = {
     message: PropTypes.object
@@ -55,6 +57,6 @@ const styles = {
   },
   bubble: {
     marginLeft: 10,
-    color: "#fff"
+    color: "#666"
   }
 };

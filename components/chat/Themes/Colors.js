@@ -15,6 +15,8 @@ const TEXT_DARK_PRIMARY = Color(TEXT_DARK).alpha(0.87);
 const TEXT_DARK_SECONDARY = Color(TEXT_DARK).alpha(0.64);
 const TEXT_DARK_HINT = Color(TEXT_DARK).alpha(0.54);
 const TEXT_DARK_DISABLED = Color(TEXT_DARK).alpha(0.38);
+const WHITE = "#FFF";
+const BLACK = "#000";
 export default {
   PRIMARY,
   PRIMARY_DARK,
@@ -29,5 +31,7 @@ export default {
   TEXT_DARK_PRIMARY,
   TEXT_DARK_SECONDARY,
   TEXT_DARK_HINT,
-  TEXT_DARK_DISABLED
+  TEXT_DARK_DISABLED,
+  WHITE,
+  BLACK
 };

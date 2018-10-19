@@ -73,13 +73,13 @@ const styles = {
   },
   header: {
     height: 80,
-    backgroundColor: "#401"
+    backgroundColor: Colors.WHITE
   },
   subContent: {
     flex: 1,
     overflow: "auto",
     paddingLeft: 20,
-    backgroundColor: "#FFF"
+    backgroundColor: Colors.WHITE
   },
   footer: {
     height: 60
