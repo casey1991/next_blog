@@ -8,7 +8,7 @@ import ActionBar from "./ActionBar";
 import Sender from "./Sender";
 import { Rooms } from "./Rooms";
 // utils
-import { MessageShape, UserShape } from "./utils";
+import { MessageShape, UserShape, RoomShape } from "./utils";
 
 // styles
 import { Colors } from "./Themes";
@@ -16,29 +16,33 @@ import { Colors } from "./Themes";
 class Chat extends Component {
   static propTypes = {
     messages: PropTypes.arrayOf(MessageShape),
+    rooms: PropTypes.arrayOf(RoomShape),
     user: UserShape.isRequired,
-    renderActionBar: PropTypes.func
+    renderActionBar: PropTypes.func,
+    renderRooms: PropTypes.func
   };
   static defaultProps = {
-    messages: []
+    messages: [],
+    rooms: []
   };
   static Sender = Sender;
   static ActionBar = ActionBar;
+  static Rooms = Rooms;
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { renderActionBar } = this.props;
+    const { renderActionBar, renderRooms, rooms, messages } = this.props;
     return (
       <div style={[styles.container]}>
         <div style={[styles.menu]}>
-          <Rooms />
+          {renderRooms ? renderRooms() : <Rooms rooms={rooms} />}
         </div>
         <div style={[styles.content]}>
           <div style={[styles.header]} />
           <div style={[styles.subContent]}>
-            <MessagesContainer messages={this.props.messages} />
+            <MessagesContainer messages={messages} />
           </div>
           <div style={[styles.footer]}>
             {renderActionBar ? renderActionBar() : <ActionBar />}

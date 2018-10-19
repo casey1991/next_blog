@@ -90,11 +90,23 @@ class Chat extends React.Component {
     );
   };
   render() {
-    const { messages } = this.props;
+    const { messages, rooms, loadMessages } = this.props;
+    const { selectedRoom } = this.state;
     const { _onSend } = this;
     return (
       <BBChat
         messages={messages}
+        renderRooms={() => (
+          <BBChat.Rooms
+            rooms={rooms}
+            selectedRoom={selectedRoom}
+            onItemClick={id => {
+              this.setState({ selectedRoom: id }, () => {
+                loadMessages({ roomId: this.state.selectedRoom });
+              });
+            }}
+          />
+        )}
         renderActionBar={() => (
           <BBChat.ActionBar
             renderSender={() => (

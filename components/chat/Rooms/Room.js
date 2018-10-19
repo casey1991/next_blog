@@ -3,28 +3,35 @@ import Radium from "radium";
 import PropTypes from "prop-types";
 // components
 import Avatar from "../Avatar";
-// themes
+// others
 import { Colors } from "../Themes";
+import { RoomShape } from "../utils";
 class Room extends Component {
   static propTypes = {
-    active: PropTypes.bool
+    active: PropTypes.bool,
+    room: RoomShape,
+    onClick: PropTypes.func
   };
   static defaultProps = {
-    active: false
+    active: false,
+    onClick: () => {}
   };
   constructor(props) {
     super(props);
   }
   render() {
-    const { style, active } = this.props;
+    const { style, active, room, onClick } = this.props;
     return (
       <li
         style={[style, styles.containner, active ? styles.active : null]}
         active
+        onClick={() => {
+          onClick(room);
+        }}
       >
         <Avatar size={60} />
         <div style={[styles.content]}>
-          <span style={[styles.title]}>Title</span>{" "}
+          <span style={[styles.title]}>{room.name}</span>{" "}
           <span style={[styles.description]}>Description</span>
         </div>
         <span style={[styles.badge]}>99</span>
@@ -40,7 +47,7 @@ const styles = {
     alignItems: "center",
     padding: 20,
     ":hover": {
-      backgroundColor: Colors.PRIMARY_DARK
+      backgroundColor: Colors.PRIMARY_LIGHT
     }
   },
   active: {

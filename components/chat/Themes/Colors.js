@@ -1,8 +1,10 @@
 const PRIMARY = "#0CA461";
 const PRIMARY_DARK = "#219269";
+const PRIMARY_LIGHT = "#33D99D";
 const BACKGROUND = "#EAEAEA";
 export default {
   PRIMARY,
   PRIMARY_DARK,
+  PRIMARY_LIGHT,
   BACKGROUND
 };
