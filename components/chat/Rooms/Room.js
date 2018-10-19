@@ -3,6 +3,7 @@ import Radium from "radium";
 import PropTypes from "prop-types";
 // components
 import Avatar from "../Avatar";
+import { Primary, Secondary } from "../Text";
 // others
 import { Colors } from "../Themes";
 import { RoomShape } from "../utils";
@@ -31,8 +32,8 @@ class Room extends Component {
       >
         <Avatar size={60} />
         <div style={[styles.content]}>
-          <span style={[styles.title]}>{room.name}</span>{" "}
-          <span style={[styles.description]}>Description</span>
+          <Primary>{room.name}</Primary>
+          <Secondary>Description</Secondary>
         </div>
         <span style={[styles.badge]}>99</span>
       </li>
@@ -58,12 +59,6 @@ const styles = {
     flex: 1,
     flexDirection: "column",
     paddingLeft: 10
-  },
-  title: {
-    color: "#EEE"
-  },
-  description: {
-    color: "#DDD"
   },
   badge: {
     display: "flex",

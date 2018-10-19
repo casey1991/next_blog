@@ -7,6 +7,7 @@ import MessagesContainer from "./MessagesContainer";
 import ActionBar from "./ActionBar";
 import Sender from "./Sender";
 import { Rooms } from "./Rooms";
+import Menu from "./Menu/index";
 // utils
 import { MessageShape, UserShape, RoomShape } from "./utils";
 
@@ -37,7 +38,7 @@ class Chat extends Component {
     return (
       <div style={[styles.container]}>
         <div style={[styles.menu]}>
-          {renderRooms ? renderRooms() : <Rooms rooms={rooms} />}
+          <Menu>{renderRooms ? renderRooms() : <Rooms rooms={rooms} />}</Menu>
         </div>
         <div style={[styles.content]}>
           <div style={[styles.header]} />
@@ -63,7 +64,6 @@ const styles = {
   },
   menu: {
     flex: 3,
-    display: "flex",
     backgroundColor: Colors.PRIMARY
   },
   content: {

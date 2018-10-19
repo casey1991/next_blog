@@ -7,12 +7,14 @@ class Avatar extends Component {
   static propTypes = {
     message: PropTypes.object,
     size: PropTypes.number,
-    color: PropTypes.string
+    color: PropTypes.string,
+    src: PropTypes.string
   };
   static defaultProps = {
     size: 40,
     color: Colors.BACKGROUND,
-    message: {}
+    message: {},
+    src: "/static/img/home_bg.jpg"
   };
   constructor(props) {
     super(props);
@@ -27,12 +29,13 @@ class Avatar extends Component {
           {
             width: this.props.size,
             height: this.props.size,
-            backgroundColor: this.props.color
+            background: `${this.props.color} no-repeat center  url(${
+              this.props.src
+            })`,
+            backgroundSize: "cover"
           }
         ]}
-      >
-        {children}
-      </span>
+      />
     );
   }
 }
