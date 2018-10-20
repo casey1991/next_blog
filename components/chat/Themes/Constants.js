@@ -1,1 +1,8 @@
-export default {};
+const STATUS_SENNDING = "SENDING";
+const STATUS_RECEIVED = "RECEIVED";
+const STATUS_VIEWED = "VIEWED";
+export default {
+  STATUS_SENNDING,
+  STATUS_RECEIVED,
+  STATUS_VIEWED
+};

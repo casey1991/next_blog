@@ -8,7 +8,7 @@ import Bubble from "./Bubble";
 import Name from "./Name";
 
 // others
-
+import { Constants } from "./Themes";
 class Message extends Component {
   static propTypes = {
     message: PropTypes.object
@@ -27,6 +27,14 @@ class Message extends Component {
     const { message } = this.props;
     return <Name style={styles.name} message={message} />;
   };
+  _renderStatus = () => {
+    const { message } = this.props;
+    return (
+      <span style={{ marginLeft: 10 }}>
+        {message.status === Constants.STATUS_SENNDING ? "Loading" : "Received"}
+      </span>
+    );
+  };
   render() {
     return (
       <div style={[styles.containner]}>
@@ -35,6 +43,7 @@ class Message extends Component {
         <div style={styles.content}>
           <Avatar style={styles.avatar} />
           {this._renderBubble()}
+          {this._renderStatus()}
         </div>
       </div>
     );
@@ -50,7 +59,8 @@ const styles = {
   content: {
     display: "flex",
     marginLeft: 10,
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: "center"
   },
   name: {
     marginLeft: 60
