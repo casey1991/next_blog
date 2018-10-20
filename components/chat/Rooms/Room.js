@@ -9,23 +9,22 @@ import { Colors } from "../Themes";
 import { RoomShape } from "../utils";
 class Room extends Component {
   static propTypes = {
-    active: PropTypes.bool,
+    selected: PropTypes.bool,
     room: RoomShape,
     onClick: PropTypes.func
   };
   static defaultProps = {
-    active: false,
+    selected: false,
     onClick: () => {}
   };
   constructor(props) {
     super(props);
   }
   render() {
-    const { style, active, room, onClick } = this.props;
+    const { style, selected, room, onClick } = this.props;
     return (
       <li
-        style={[style, styles.containner, active ? styles.active : null]}
-        active
+        style={[style, styles.containner, selected ? styles.selected : null]}
         onClick={() => {
           onClick(room);
         }}
@@ -51,7 +50,7 @@ const styles = {
       backgroundColor: Colors.PRIMARY_LIGHT
     }
   },
-  active: {
+  selected: {
     backgroundColor: Colors.PRIMARY_LIGHT
   },
   content: {

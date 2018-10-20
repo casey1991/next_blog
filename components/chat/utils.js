@@ -4,7 +4,7 @@ export const messageContentHelper = message => {};
 export const UserShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  status: PropTypes.oneOfType([
+  status: PropTypes.oneOf([
     Constants.STATUS_RECEIVED,
     Constants.STATUS_SENNDING,
     Constants.STATUS_VIEWED

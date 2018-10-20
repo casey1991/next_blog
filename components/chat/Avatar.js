@@ -21,7 +21,6 @@ class Avatar extends Component {
   }
 
   render() {
-    const { children } = this.props;
     return (
       <span
         style={[
@@ -29,10 +28,11 @@ class Avatar extends Component {
           {
             width: this.props.size,
             height: this.props.size,
-            background: `${this.props.color} no-repeat center  url(${
-              this.props.src
-            })`,
-            backgroundSize: "cover"
+            backgroundSize: "cover",
+            backgroundImage: `url(${this.props.src})`,
+            backgroundColor: `${this.props.color}`,
+            backgroundRepeat: "no-repeat",
+            backgrounndPosition: "center"
           }
         ]}
       />

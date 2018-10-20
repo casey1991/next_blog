@@ -26,7 +26,8 @@ class Rooms extends Component {
     const { selectedRoom, onItemClick } = this.props;
     return (
       <Room
-        active={room.id === selectedRoom ? true : false}
+        key={room.id}
+        selected={room.id === selectedRoom ? true : false}
         room={room}
         onClick={room => {
           onItemClick(room.id);
