@@ -3,9 +3,9 @@ import Radium from "radium";
 import PropTypes from "prop-types";
 // components
 import Avatar from "../Avatar";
-import { Primary, Secondary } from "../Text";
+import Text from "../Text";
 // others
-import { Colors } from "../Themes";
+import { Colors, Constants } from "../Themes";
 import { RoomShape } from "../utils";
 class Room extends Component {
   static propTypes = {
@@ -31,8 +31,12 @@ class Room extends Component {
       >
         <Avatar size={60} />
         <div style={[styles.content]}>
-          <Primary>{room.name}</Primary>
-          <Secondary>Description</Secondary>
+          <Text type={Constants.TEXT_PRIMARY} reverse>
+            {room.name}
+          </Text>
+          <Text type={Constants.TEXT_SECONDARY} reverse>
+            Description
+          </Text>
         </div>
         <span style={[styles.badge]}>99</span>
       </li>

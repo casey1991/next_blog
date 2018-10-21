@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // components
 // others
 import { Colors, Dimensions, Constants } from "./Themes";
-class Primary extends Component {
+class Text extends Component {
   static propTypes = {
     type: PropTypes.oneOf([
       Constants.TEXT_PRIMARY,
@@ -61,7 +61,7 @@ class Primary extends Component {
     );
   }
 }
-export default Radium(Primary);
+export default Radium(Text);
 const styles = {
   base: {
     fontSize: Dimensions.TEXT_PRIMARY,
