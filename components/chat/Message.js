@@ -45,13 +45,14 @@ class Message extends Component {
   };
   render() {
     return (
-      <div style={[styles.containner]}>
-        {this._renderName()}
-
-        <div style={styles.content}>
-          <Avatar style={styles.avatar} />
-          {this._renderBubble()}
-          {this._renderStatus()}
+      <div style={[styles.layoutContainer]}>
+        <Avatar style={styles.avatar} />
+        <div style={styles.layoutContentContainer}>
+          <div style={styles.layoutNameContainer}>{this._renderName()}</div>
+          <div style={styles.layoutInnerContentContainer}>
+            {this._renderBubble()}
+            {this._renderStatus()}
+          </div>
         </div>
       </div>
     );
@@ -59,22 +60,22 @@ class Message extends Component {
 }
 export default Radium(Message);
 const styles = {
-  containner: {
+  layoutContainer: {
     display: "flex",
+    flexDirection: "row"
+  },
+  layoutContentContainer: {
+    flex: 1,
+    display: "flex",
+    marginLeft: 10,
+    marginRight: 60,
     flexDirection: "column"
   },
-  avatar: {},
-  content: {
+  layoutNameContainer: {
+    marginBottom: 10
+  },
+  layoutInnerContentContainer: {
     display: "flex",
-    marginLeft: 10,
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  name: {
-    marginLeft: 60
-  },
-  bubble: {
-    marginLeft: 10,
-    color: "#666"
+    flexDirection: "row"
   }
 };
