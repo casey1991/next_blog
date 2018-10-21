@@ -6,6 +6,7 @@ import Radium from "radium";
 import Avatar from "./Avatar";
 import Bubble from "./Bubble";
 import Name from "./Name";
+import Text from "./Text";
 
 // others
 import { Constants } from "./Themes";
@@ -34,7 +35,11 @@ class Message extends Component {
     const { message } = this.props;
     return (
       <span style={{ marginLeft: 10 }}>
-        {message.status === Constants.STATUS_SENNDING ? "Loading" : "Received"}
+        {message.status === Constants.STATUS_SENNDING ? (
+          <Text type={Constants.TEXT_HINT}>loading</Text>
+        ) : (
+          <Text type={Constants.TEXT_HINT}>received</Text>
+        )}
       </span>
     );
   };
