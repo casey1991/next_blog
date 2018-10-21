@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
 import { Constants } from "./Themes";
-export const messageContentHelper = message => {};
+import { Text } from "./MessageContent";
+export const messageContentHelper = message => {
+  return <Text message={message} />;
+};
 export const UserShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

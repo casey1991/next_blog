@@ -9,6 +9,7 @@ import Name from "./Name";
 
 // others
 import { Constants } from "./Themes";
+import { messageContentHelper } from "./utils";
 class Message extends Component {
   static propTypes = {
     message: PropTypes.object
@@ -21,7 +22,9 @@ class Message extends Component {
   }
   _renderBubble = () => {
     const { message } = this.props;
-    return <Bubble style={styles.bubble}>{message.text}</Bubble>;
+    return (
+      <Bubble style={styles.bubble}>{messageContentHelper(message)}</Bubble>
+    );
   };
   _renderName = () => {
     const { message } = this.props;

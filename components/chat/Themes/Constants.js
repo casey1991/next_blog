@@ -1,8 +1,14 @@
 const STATUS_SENNDING = "SENDING";
 const STATUS_RECEIVED = "RECEIVED";
 const STATUS_VIEWED = "VIEWED";
+const TEXT_PRIMARY = "primary";
+const TEXT_SECONDARY = "secondary";
+const TEXT_HINT = "hint";
 export default {
   STATUS_SENNDING,
   STATUS_RECEIVED,
-  STATUS_VIEWED
+  STATUS_VIEWED,
+  TEXT_PRIMARY,
+  TEXT_SECONDARY,
+  TEXT_HINT
 };
