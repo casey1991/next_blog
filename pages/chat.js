@@ -13,41 +13,38 @@ class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRoom: props.selectedRoom,
-      subscribeMessageCreated: null
+      selectedRoom: props.selectedRoom
     };
+    this._unsubscribeCreateMessage = null;
   }
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (!nextProps.loadingMessages) {
-      console.log(prevState, "hei", SUBSCRIPTION_MESSAGE_CREATED);
-      // Check for existing subscription
-      if (prevState.subscribeMessageCreated) {
-        // Only unsubscribe/update state if subscription variable has changed
-        if (prevState.selectedRoom === nextProps.selectedRoom) {
-          return null;
-        }
-        prevState.subscribeMessageCreated();
+  componentDidMount = () => {
+    this._registeMessageCreated();
+  };
+  componentWillUnmount = () => {
+    this._unRegisteMessageCreated();
+  };
+  // listen&unlisten message created
+  _registeMessageCreated = () => {
+    const { subscribeMessages } = this.props;
+    const { selectedRoom } = this.state;
+    this._unsubscribeCreateMessage = subscribeMessages({
+      document: SUBSCRIPTION_MESSAGE_CREATED,
+      variables: {
+        roomId: selectedRoom
+      },
+      updateQuery: (previousResult, { subscriptionData, variables }) => {
+        // Perform updates on previousResult with subscriptionData
+        if (!subscriptionData.data) return previousResult;
+        const newMessage = subscriptionData.data.messageCreated;
+        return Object.assign({}, previousResult, {
+          messages: [...previousResult.messages, newMessage]
+        });
       }
-
-      return {
-        // Subscribe
-        subscribeMessageCreated: nextProps.subscribeMessages({
-          document: SUBSCRIPTION_MESSAGE_CREATED,
-          variables: {
-            roomId: nextProps.selectedRoom
-          },
-          updateQuery: (previousResult, { subscriptionData, variables }) => {
-            // Perform updates on previousResult with subscriptionData
-            return updatedResult;
-          }
-        }),
-        // Store subscriptionParam in state for next update
-        selectedRoom: nextProps.selectedRoom
-      };
-    }
-
-    return null;
-  }
+    });
+  };
+  _unRegisteMessageCreated = () => {
+    if (this._unsubscribeCreateMessage) this._unsubscribeCreateMessage();
+  };
   /**
    * actions
    */
@@ -92,7 +89,7 @@ class Chat extends React.Component {
     });
   };
   _renderRooms = () => {
-    const { rooms } = this.props;
+    const { rooms, loadMessages } = this.props;
     const { selectedRoom } = this.state;
     return (
       <BBChat.Rooms
@@ -100,6 +97,8 @@ class Chat extends React.Component {
         selectedRoom={selectedRoom}
         onItemClick={id => {
           this.setState({ selectedRoom: id }, () => {
+            this._unRegisteMessageCreated();
+            this._registeMessageCreated();
             loadMessages({ roomId: this.state.selectedRoom });
           });
         }}
