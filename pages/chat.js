@@ -6,14 +6,47 @@ import { Chat as BBChat } from "../components/chat";
 import {
   QUERY_ROOMS,
   MUTATION_CREATE_MESSAGE,
-  QUERY_MESSAGES
+  QUERY_MESSAGES,
+  SUBSCRIPTION_MESSAGE_CREATED
 } from "../graphql";
 class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRoom: props.selectedRoom
+      selectedRoom: props.selectedRoom,
+      subscribeMessageCreated: null
     };
+  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!nextProps.loadingMessages) {
+      console.log(prevState, "hei", SUBSCRIPTION_MESSAGE_CREATED);
+      // Check for existing subscription
+      if (prevState.subscribeMessageCreated) {
+        // Only unsubscribe/update state if subscription variable has changed
+        if (prevState.selectedRoom === nextProps.selectedRoom) {
+          return null;
+        }
+        prevState.subscribeMessageCreated();
+      }
+
+      return {
+        // Subscribe
+        subscribeMessageCreated: nextProps.subscribeMessages({
+          document: SUBSCRIPTION_MESSAGE_CREATED,
+          variables: {
+            roomId: nextProps.selectedRoom
+          },
+          updateQuery: (previousResult, { subscriptionData, variables }) => {
+            // Perform updates on previousResult with subscriptionData
+            return updatedResult;
+          }
+        }),
+        // Store subscriptionParam in state for next update
+        selectedRoom: nextProps.selectedRoom
+      };
+    }
+
+    return null;
   }
   /**
    * actions
@@ -58,66 +91,42 @@ class Chat extends React.Component {
       }
     });
   };
-  /**
-   * sub renders
-   */
-  _renderGroups = () => {
-    const { rooms, loadMessages } = this.props;
+  _renderRooms = () => {
+    const { rooms } = this.props;
+    const { selectedRoom } = this.state;
     return (
-      <Rooms
+      <BBChat.Rooms
         rooms={rooms}
-        onItemClick={room => {
-          this.setState(
-            {
-              selectedRoom: room
-            },
-            () => {
-              loadMessages({ roomId: this.state.selectedRoom });
-            }
-          );
+        selectedRoom={selectedRoom}
+        onItemClick={id => {
+          this.setState({ selectedRoom: id }, () => {
+            loadMessages({ roomId: this.state.selectedRoom });
+          });
         }}
       />
     );
   };
-  _renderRoom = () => {
-    const { messages } = this.props;
-    const {} = this.state;
+  _renderActionBar = () => {
+    const { _onSend } = this;
     return (
-      <Room
-        messages={messages}
-        renderSender={() => <Room.Sender onSubmit={this._onSend} />}
+      <BBChat.ActionBar
+        renderSender={() => (
+          <BBChat.Sender
+            onSend={value => {
+              _onSend(value);
+            }}
+          />
+        )}
       />
     );
   };
   render() {
-    const { messages, rooms, loadMessages } = this.props;
-    const { selectedRoom } = this.state;
-    const { _onSend } = this;
+    const { messages } = this.props;
     return (
       <BBChat
         messages={messages}
-        renderRooms={() => (
-          <BBChat.Rooms
-            rooms={rooms}
-            selectedRoom={selectedRoom}
-            onItemClick={id => {
-              this.setState({ selectedRoom: id }, () => {
-                loadMessages({ roomId: this.state.selectedRoom });
-              });
-            }}
-          />
-        )}
-        renderActionBar={() => (
-          <BBChat.ActionBar
-            renderSender={() => (
-              <BBChat.Sender
-                onSend={value => {
-                  _onSend(value);
-                }}
-              />
-            )}
-          />
-        )}
+        renderRooms={this._renderRooms}
+        renderActionBar={this._renderActionBar}
       />
     );
   }
@@ -144,7 +153,9 @@ export default compose(
     props: ({ data }) => {
       return {
         loadMessages: data.refetch,
-        messages: data.messages
+        messages: data.messages,
+        subscribeMessages: data.subscribeToMore,
+        loadingMessages: data.loading
       };
     }
   }),

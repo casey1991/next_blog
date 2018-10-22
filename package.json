@@ -20,6 +20,8 @@
     "apollo-link-error": "^1.1.1",
     "apollo-link-http": "^1.5.5",
     "apollo-link-state": "^0.4.2",
+    "apollo-link-ws": "^1.0.9",
+    "apollo-utilities": "^1.0.21",
     "babel-plugin-import": "^1.9.1",
     "color": "^3.1.0",
     "cookie": "^0.3.1",
@@ -45,6 +47,7 @@
     "redux-saga": "^0.16.1",
     "seamless-immutable": "^7.1.4",
     "semantic-ui-react": "^0.82.5",
+    "subscriptions-transport-ws": "^0.9.15",
     "validator": "^10.8.0"
   }
 }

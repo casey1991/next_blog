@@ -1,4 +1,17 @@
 import ggl from "graphql-tag";
+export const SUBSCRIPTION_MESSAGE_CREATED = ggl`
+  subscription onMessageCreated($roomId:String!){
+    messageCreated(roomId:$roomId){
+      id
+      text
+      user{
+        id
+        name
+      }
+      status
+    }
+  }
+`;
 export const MUTATION_CREATE_TOKEN = ggl`
   mutation createToken($email: String!, $password: String!) {
     createToken(email: $email, password: $password) {
