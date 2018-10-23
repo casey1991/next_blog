@@ -69,23 +69,23 @@ class Chat extends React.Component {
           status: "SENDING",
           __typename: "Message"
         }
-      },
-      update: (proxy, { data: { createMessage } }) => {
-        const data = proxy.readQuery({
-          query: QUERY_MESSAGES,
-          variables: {
-            roomId: selectedRoom
-          }
-        });
-        data.messages.push(createMessage);
-        proxy.writeQuery({
-          query: QUERY_MESSAGES,
-          variables: {
-            roomId: selectedRoom
-          },
-          data
-        });
       }
+      // update: (proxy, { data: { createMessage } }) => {
+      //   const data = proxy.readQuery({
+      //     query: QUERY_MESSAGES,
+      //     variables: {
+      //       roomId: selectedRoom
+      //     }
+      //   });
+      //   data.messages.push(createMessage);
+      //   proxy.writeQuery({
+      //     query: QUERY_MESSAGES,
+      //     variables: {
+      //       roomId: selectedRoom
+      //     },
+      //     data
+      //   });
+      // }
     });
   };
   _renderRooms = () => {
