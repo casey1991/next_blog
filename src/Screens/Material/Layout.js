@@ -50,10 +50,11 @@ const styles = {
   },
   sideNav: {
     position: "fixed",
-    width: "320px",
+    width: "280px",
     top: 0,
     bottom: 0,
     display: "block",
+    backgroundColor: "#FFF",
     borderRight: "1px solid rgba(0,0,0,.12)",
     zIndex: 3,
     padding: "72px 0 40px",
@@ -65,7 +66,7 @@ const styles = {
     }
   },
   main: {
-    minHeight: 640,
+    minHeight: 700,
     width: "100%",
     margin: "0 auto",
     paddingLeft: 16,
@@ -81,5 +82,21 @@ const styles = {
       paddingRight: 40
     }
   },
-  footer: {}
+  footer: {
+    minHeight: 320,
+    width: "100%",
+    margin: "0 auto",
+    paddingLeft: 16,
+    paddingRight: 16,
+    zIndex: 1,
+    backgroundColor: "#5f6368",
+    "@media screen and (min-width:600px)": {
+      paddingLeft: 24,
+      paddingRight: 24
+    },
+    "@media screen and (min-width:1024px)": {
+      paddingLeft: 320,
+      paddingRight: 40
+    }
+  }
 };
