@@ -60,7 +60,7 @@ const styles = {
     overflowY: "auto",
     transition: "transform .15s cubic-bezier(.4,0,.2,1)",
     transform: "translateX(-100%)",
-    "@media (min-width:1240px)": {
+    "@media (min-width:1024px)": {
       transform: "translateX(0)"
     }
   },
@@ -71,12 +71,12 @@ const styles = {
     paddingLeft: 16,
     paddingRight: 16,
     "@media screen and (min-width:600px)": {
-      maxWidth: 688,
+      maxWidth: "632px",
       paddingLeft: 24,
       paddingRight: 24
     },
-    "@media screen and (min-width:1240px)": {
-      maxWidth: 1000,
+    "@media screen and (min-width:1024px)": {
+      maxWidth: "944px",
       paddingLeft: 320,
       paddingRight: 40
     }
