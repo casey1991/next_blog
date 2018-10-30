@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Radium from "radium";
+import Article from "./Components/Article";
 class Layout extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,9 @@ class Layout extends Component {
         <header style={[styles.header]} />
         <nav style={[styles.breadcrumbs]} />
         <nav style={[styles.sideNav]} />
-        <main style={[styles.main]}>main</main>
+        <main style={[styles.main]}>
+          <Article />
+        </main>
         <footer style={[styles.footer]} />
       </div>
     );
@@ -26,8 +29,10 @@ const styles = {
     padding: 0
   },
   header: {
-    width: "100%",
     height: 112,
+    top: 0,
+    left: 0,
+    right: 0,
     position: "fixed",
     backgroundColor: "#333",
     boxShadow: "0px 2px 4px rgba(0,0,0,0.5)",
@@ -67,7 +72,9 @@ const styles = {
   },
   main: {
     minHeight: 700,
-    width: "100%",
+    left: 0,
+    right: 0,
+    top: 0,
     margin: "0 auto",
     paddingLeft: 16,
     paddingRight: 16,
