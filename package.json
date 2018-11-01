@@ -6,6 +6,8 @@
   "scripts": {
     "start:dev": "node server.js",
     "start": "NODE_ENV=production node server.js",
+    "storybook": "start-storybook -p 9001",
+    "build-storybook": "build-storybook",
     "build": "next build"
   },
   "author": "",
@@ -49,5 +51,11 @@
     "semantic-ui-react": "^0.82.5",
     "subscriptions-transport-ws": "^0.9.15",
     "validator": "^10.8.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^4.0.2",
+    "@storybook/react": "^4.0.2",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4"
   }
 }
