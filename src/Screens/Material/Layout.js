@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Radium from "radium";
 import Article from "./Components/Article";
+import Header from "./Components/Header";
+import { Colors } from "../../Themes";
 class Layout extends Component {
   constructor(props) {
     super(props);
@@ -9,7 +11,7 @@ class Layout extends Component {
   render() {
     return (
       <div style={[styles.container]}>
-        <header style={[styles.header]} />
+        <Header />
         <nav style={[styles.breadcrumbs]} />
         <nav style={[styles.sideNav]} />
         <main style={[styles.main]}>
@@ -34,7 +36,7 @@ const styles = {
     left: 0,
     right: 0,
     position: "fixed",
-    backgroundColor: "#333",
+    backgroundColor: Colors.Primary,
     boxShadow: "0px 2px 4px rgba(0,0,0,0.5)",
     zIndex: 4,
     "@media (min-width:599px)": {

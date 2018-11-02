@@ -6,10 +6,19 @@ import { Button } from "../src/Components";
 storiesOf("Button", module)
   .add("with text", () => (
     <div>
-      <Button onClick={action("clicked")} disabled>
+      <Button
+        onClick={() => {
+          action("clicked");
+        }}
+        disabled
+      >
         Disabled Button
       </Button>
-      <Button onClick={action("clicked")}>
+      <Button
+        onClick={() => {
+          action("clicked");
+        }}
+      >
         Primary Button | Default Button
       </Button>
       <Button onClick={action("clicked")} type="Outline">

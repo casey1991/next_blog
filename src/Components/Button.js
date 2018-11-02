@@ -2,17 +2,20 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Radium from "radium";
 import Color from "color";
+import Text from "./Text";
 import { withTheme } from "./withTheme";
 class Button extends Component {
   static propTypes = {
     theme: PropTypes.shape({ Colors: {}, Dimensions: {}, Constatns: {} }),
     type: PropTypes.oneOfType(["Text", "Outline", "Contained", "Toggle"]),
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func
   };
   static defaultProps = {
     theme: { Colors: {}, Dimensions: {}, Constatns: {} },
     type: "Contained",
-    disabled: false
+    disabled: false,
+    onClick: () => {}
   };
   constructor(props) {
     super(props);
@@ -122,8 +125,13 @@ class Button extends Component {
     };
   };
   render() {
+    const { onClick, disabled } = this.props;
     const styles = this._getStyles();
-    return <span style={[styles.container]}>{this.props.children}</span>;
+    return (
+      <span style={[styles.container]} onClick={!disabled ? onClick : () => {}}>
+        <Text type="Button">{this.props.children}</Text>
+      </span>
+    );
   }
 }
 export default withTheme(Radium(Button));
