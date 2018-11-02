@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Radium from "radium";
-
+import { Button } from "../../../Components";
 class Article extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +14,7 @@ class Article extends Component {
           Spacing methods use baseline grids, keylines, padding, and incremental
           spacing to affect ratios, containers, and touch targets.
         </h2>
+        <Button>Button</Button>
       </div>
     );
   }

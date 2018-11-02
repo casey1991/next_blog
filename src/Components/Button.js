@@ -127,7 +127,11 @@ class Button extends Component {
     const styles = this._getStyles();
     return (
       <span style={[styles.container]} onClick={!disabled ? onClick : () => {}}>
-        <Text type="Button" style={{ color: this._getColor() }}>
+        <Text
+          type="Button"
+          style={{ color: this._getColor() }}
+          inverted={this._getBackgroundColor().isDark ? true : false}
+        >
           {this.props.children}
         </Text>
       </span>

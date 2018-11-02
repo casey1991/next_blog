@@ -1,5 +1,5 @@
-const Primary = "#6200EE";
-// const Primary = "#03DAC6";
+// const Primary = "#6200EE";
+const Primary = "#ffc107";
 const Secondary = "#03DAC6";
 const Accent = "#C51162";
 const Black = "#000";
