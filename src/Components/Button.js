@@ -107,7 +107,6 @@ class Button extends Component {
   };
   _getStyles = () => {
     const bgColor = this._getBackgroundColor();
-    const color = this._getColor();
     const border = this._getBorder();
     return {
       container: {
@@ -116,7 +115,6 @@ class Button extends Component {
         padding: "5px 10px",
         margin: "5px",
         fontSize: "14px",
-        color: color,
         backgroundColor: bgColor,
         borderRadius: "4px",
         border: border,
@@ -129,7 +127,9 @@ class Button extends Component {
     const styles = this._getStyles();
     return (
       <span style={[styles.container]} onClick={!disabled ? onClick : () => {}}>
-        <Text type="Button">{this.props.children}</Text>
+        <Text type="Button" style={{ color: this._getColor() }}>
+          {this.props.children}
+        </Text>
       </span>
     );
   }

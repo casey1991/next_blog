@@ -35,7 +35,6 @@ class Header extends Component {
         right: 0,
         position: "fixed",
         backgroundColor: bgColor,
-        color: "#FFF",
         boxShadow: "0px 2px 4px rgba(0,0,0,0.5)",
         zIndex: 4,
         "@media (min-width:599px)": {
@@ -46,10 +45,13 @@ class Header extends Component {
   };
   render() {
     const styles = this._getStyles();
+    const bgColor = this._getBackgroundColor();
     return (
       <header style={[styles.container]}>
         {/* content */}
-        <Text type="H6">Header</Text>
+        <Text type="H6" inverted={bgColor.isDark() ? true : false}>
+          Header
+        </Text>
       </header>
     );
   }
