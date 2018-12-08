@@ -10,6 +10,11 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+          />
           <style>{`body { margin: 0 ,padding:0 } /* custom! */`}</style>
           <link
             rel="stylesheet"
@@ -19,6 +24,14 @@ export default class MyDocument extends Document {
           <link
             rel="stylesheet"
             href="//cdnjs.cloudflare.com/ajax/libs/antd/3.2.0/antd.min.css"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
           />
         </Head>
         <body>
