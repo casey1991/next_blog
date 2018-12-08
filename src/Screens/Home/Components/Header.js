@@ -6,7 +6,9 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Hidden
+  Hidden,
+  Tabs,
+  Tab
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core";
 import { Search as SearchIcon, Menu as MenuIcon } from "@material-ui/icons";
@@ -30,36 +32,69 @@ class Header extends Component {
                 <MenuIcon />
               </IconButton>
             </Hidden>
-
-            <Typography variant="subtitle1" color="inherit" noWrap>
-              MATERIAL DESIGN
-            </Typography>
+            <Hidden smDown>
+              <Typography variant="subtitle1" color="inherit" noWrap>
+                MATERIAL DESIGN
+              </Typography>
+            </Hidden>
             <div className={classes.grow} />
-            <Typography
-              variant="h6"
-              color="inherit"
-              classes={{ root: classes.navRoot }}
-            >
-              Design
-            </Typography>
-            <Typography
-              variant="h6"
-              color="inherit"
-              classes={{ root: classes.navRoot }}
-            >
-              Develop
-            </Typography>
-            <Typography
-              variant="h6"
-              color="inherit"
-              classes={{ root: classes.navRoot }}
-            >
-              Tools
-            </Typography>
+            <Hidden xsDown>
+              <Typography
+                variant="h6"
+                color="inherit"
+                classes={{ root: classes.navRoot }}
+              >
+                Design
+              </Typography>
+              <Typography
+                variant="h6"
+                color="inherit"
+                classes={{ root: classes.navRoot }}
+              >
+                Develop
+              </Typography>
+              <Typography
+                variant="h6"
+                color="inherit"
+                classes={{ root: classes.navRoot }}
+              >
+                Tools
+              </Typography>
+            </Hidden>
             <IconButton color="inherit" classes={{ root: classes.searchRoot }}>
               <SearchIcon />
             </IconButton>
           </Toolbar>
+          <Hidden smUp>
+            <Tabs
+              fullWidth
+              centered
+              classes={{
+                root: classes.tabsRoot,
+                indicator: classes.tabsIndicator
+              }}
+              value={0}
+            >
+              <Tab
+                label="Design"
+                classes={{
+                  root: classes.tabRoot
+                }}
+              />
+              <Tab
+                label="Develop"
+                classes={{
+                  root: classes.tabRoot
+                }}
+              />
+              <Tab
+                label="Tools"
+                classes={{
+                  root: classes.tabRoot
+                }}
+              />
+            </Tabs>
+          </Hidden>
         </AppBar>
       </div>
     );
@@ -93,6 +128,20 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 2,
     fontWeight: "normal",
     cursor: "pointer"
+  },
+  tabsRoot: {},
+  tabsIndicator: {
+    backgroundColor: theme.palette.common.white
+  },
+  tabRoot: {
+    "&:focus": {
+      color: theme.palette.common.white,
+      opacity: 1
+    },
+    "&:hover": {
+      color: theme.palette.common.white,
+      opacity: 1
+    }
   }
 });
 const mapStateToProps = state => {
