@@ -1,29 +1,36 @@
 import React, { Component } from "react";
-import { compose } from "redux";
+import { compose, bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import {
   AppBar,
   Toolbar,
   IconButton,
   Typography,
-  Button
+  Hidden
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core";
 import { Search as SearchIcon, Menu as MenuIcon } from "@material-ui/icons";
+// actions
+import { Actions } from "../../../Redux/Page/actions";
 
 class Header extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, toggleSideBar } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="Menu"
-              className={classes.menu}
-            >
-              <MenuIcon />
-            </IconButton>
+            <Hidden mdUp>
+              <IconButton
+                color="inherit"
+                aria-label="Menu"
+                className={classes.menu}
+                onClick={() => toggleSideBar()}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Hidden>
+
             <Typography variant="subtitle1" color="inherit" noWrap>
               MATERIAL DESIGN
             </Typography>
@@ -88,4 +95,21 @@ const styles = theme => ({
     cursor: "pointer"
   }
 });
-export default compose(withStyles(styles))(Header);
+const mapStateToProps = state => {
+  return {};
+};
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      toggleSideBar: Actions.toggleSidebar
+    },
+    dispatch
+  );
+};
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(Header);

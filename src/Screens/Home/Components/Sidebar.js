@@ -1,15 +1,21 @@
 import React, { Component } from "react";
-import { compose } from "redux";
+import { compose, bindActionCreators } from "redux";
+import { connect } from "react-redux";
+// material ui libs
 import { withStyles } from "@material-ui/core";
 import { Drawer } from "@material-ui/core";
 import { List, ListItem, ListItemText } from "@material-ui/core";
-import { toRenderProps } from "recompose";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+// libs
+import { toRenderProps } from "recompose";
+// actions
+import { Actions } from "../../../Redux/Page/actions";
+
 const WithWidth = toRenderProps(withWidth());
 const drawerWidth = 280;
 class Sidebar extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, visible, toggleSideBar } = this.props;
     return (
       <WithWidth>
         {({ width }) => {
@@ -18,10 +24,11 @@ class Sidebar extends Component {
             <Drawer
               variant={isWidthUp("md", width) ? "permanent" : "temporary"}
               className={classes.drawer}
-              // open
+              open={visible}
               classes={{
                 paper: classes.drawerPaper
               }}
+              onClose={() => toggleSideBar()}
             >
               <div className={classes.toolbar} />
               <List>
@@ -48,4 +55,23 @@ const styles = theme => ({
   },
   toolbar: theme.mixins.toolbar
 });
-export default compose(withStyles(styles))(Sidebar);
+const mapStateToProps = state => {
+  return {
+    visible: state.page.common.sideBarVisible
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      toggleSideBar: Actions.toggleSidebar
+    },
+    dispatch
+  );
+};
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(Sidebar);

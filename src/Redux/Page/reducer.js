@@ -1,16 +1,21 @@
-import { createAction, handleAction } from "redux-actions";
+import { handleAction } from "redux-actions";
+import Immutable from "seamless-immutable";
+import { Actions } from "./actions";
 
-const defaultState = {
+const defaultState = Immutable({
   common: {
     sideBarVisible: false
   }
-};
-const toggleSidebar = createAction("PAGE_TOGGLE_SIDEBAR");
+});
 const reducer = handleAction(
-  toggleSidebar,
-  (state, action) => ({
-    ...state
-  }),
+  Actions.toggleSidebar,
+  (state, action) => {
+    return Immutable.setIn(
+      state,
+      ["common", "sideBarVisible"],
+      !state.common.sideBarVisible
+    );
+  },
   defaultState
 );
 export default reducer;
