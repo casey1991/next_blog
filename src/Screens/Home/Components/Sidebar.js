@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { compose } from "redux";
 import { withStyles } from "@material-ui/core";
 import { Drawer } from "@material-ui/core";
 import { List, ListItem, ListItemText } from "@material-ui/core";
@@ -47,4 +48,4 @@ const styles = theme => ({
   },
   toolbar: theme.mixins.toolbar
 });
-export default withStyles(styles)(Sidebar);
+export default compose(withStyles(styles))(Sidebar);

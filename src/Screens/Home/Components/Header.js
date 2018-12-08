@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { compose } from "redux";
 import {
   AppBar,
   Toolbar,
@@ -87,4 +88,4 @@ const styles = theme => ({
     cursor: "pointer"
   }
 });
-export default withStyles(styles)(Header);
+export default compose(withStyles(styles))(Header);

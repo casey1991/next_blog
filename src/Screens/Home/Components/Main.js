@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { compose } from "redux";
 import { withStyles } from "@material-ui/core/styles";
 class Main extends Component {
   render() {
@@ -17,4 +18,4 @@ const styles = theme => ({
     }
   }
 });
-export default withStyles(styles)(Main);
+export default compose(withStyles(styles))(Main);
