@@ -1,7 +1,20 @@
 import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
 class Main extends Component {
   render() {
-    return <div />;
+    const { classes } = this.props;
+    return <div className={classes.root} />;
   }
 }
-export default Main;
+const styles = theme => ({
+  root: {
+    backgroundColor: "#333",
+    height: 200,
+    width: "100%",
+    [theme.breakpoints.up("lg")]: {
+      width: 1280,
+      margin: "0 auto"
+    }
+  }
+});
+export default withStyles(styles)(Main);

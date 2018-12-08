@@ -5,6 +5,10 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import JssProvider from "react-jss/lib/JssProvider";
 import getMaterialContext from "../lib/context/getMaterialContext";
+// redux config
+import { Provider } from "react-redux";
+import withRedux from "next-redux-wrapper";
+import makeStore from "../src/Redux";
 class CApp extends App {
   constructor(props) {
     super(props);
@@ -18,7 +22,7 @@ class CApp extends App {
     }
   }
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, store } = this.props;
     return (
       <Container>
         <JssProvider
@@ -33,7 +37,9 @@ class CApp extends App {
           >
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <Component {...pageProps} pageContext={this.pageContext} />
+            <Provider store={store}>
+              <Component {...pageProps} pageContext={this.pageContext} />
+            </Provider>
           </MuiThemeProvider>
         </JssProvider>
       </Container>
@@ -41,4 +47,4 @@ class CApp extends App {
   }
 }
 
-export default CApp;
+export default withRedux(makeStore)(CApp);

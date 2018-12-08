@@ -7,7 +7,7 @@ import {
   Button
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core";
-import { Search as SearchIcon } from "@material-ui/icons";
+import { Search as SearchIcon, Menu as MenuIcon } from "@material-ui/icons";
 
 class Header extends Component {
   render() {
@@ -16,6 +16,13 @@ class Header extends Component {
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="Menu"
+              className={classes.menu}
+            >
+              <MenuIcon />
+            </IconButton>
             <Typography variant="subtitle1" color="inherit" noWrap>
               MATERIAL DESIGN
             </Typography>
@@ -52,6 +59,9 @@ class Header extends Component {
 }
 const styles = theme => ({
   root: {},
+  menu: {
+    marginRight: theme.spacing.unit * 2
+  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     display: "flex"
