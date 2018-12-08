@@ -3,8 +3,8 @@ import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 // material ui libs
 import { withStyles } from "@material-ui/core";
-import { Drawer } from "@material-ui/core";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import { Drawer, Divider, Typography } from "@material-ui/core";
+import { List, ListItem, ListItemText, ListSubheader } from "@material-ui/core";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 // libs
 import { toRenderProps } from "recompose";
@@ -31,12 +31,50 @@ class Sidebar extends Component {
               onClose={() => toggleSideBar()}
             >
               <div className={classes.toolbar} />
+              <Divider />
               <List>
-                {["Introduction", "Material studies"].map(text => (
-                  <ListItem button key={text}>
-                    <ListItemText secondary={text} />
-                  </ListItem>
-                ))}
+                <List
+                  subheader={
+                    <ListSubheader>
+                      <Typography
+                        variant="subtitle1"
+                        className={classes.drawerSubheader}
+                      >
+                        Material System
+                      </Typography>
+                    </ListSubheader>
+                  }
+                >
+                  {["Introduction", "Material studies"].map(text => (
+                    <ListItem button key={text}>
+                      <ListItemText secondary={text} />
+                    </ListItem>
+                  ))}
+                </List>
+                <Divider />
+                <List
+                  subheader={
+                    <ListSubheader>
+                      <Typography
+                        variant="subtitle1"
+                        className={classes.drawerSubheader}
+                      >
+                        Material Foundation
+                      </Typography>
+                    </ListSubheader>
+                  }
+                >
+                  {[
+                    "Foundation overview",
+                    "Environment",
+                    "Layout",
+                    "Navigation"
+                  ].map(text => (
+                    <ListItem button key={text}>
+                      <ListItemText secondary={text} />
+                    </ListItem>
+                  ))}
+                </List>
               </List>
             </Drawer>
           );
@@ -52,6 +90,10 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth
+  },
+  drawerSubheader: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
   },
   toolbar: theme.mixins.toolbar
 });
