@@ -15,20 +15,13 @@ export default class MyDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
-          <style>{`body { margin: 0 ,padding:0 } /* custom! */`}</style>
-          <link
-            rel="stylesheet"
-            href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"
-          />
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-          <link
-            rel="stylesheet"
-            href="//cdnjs.cloudflare.com/ajax/libs/antd/3.2.0/antd.min.css"
-          />
+          {/* material ui config */}
+          {/* material ui config -- fonts */}
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
           />
+          {/* material ui config -- icons */}
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/icon?family=Material+Icons"

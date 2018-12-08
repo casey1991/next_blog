@@ -8,9 +8,8 @@ class Layout extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        {/* <CssBaseline /> */}
         <Header />
-        <Sidebar />
+        {/* <Sidebar /> */}
       </div>
     );
   }
