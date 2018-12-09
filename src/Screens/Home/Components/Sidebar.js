@@ -3,8 +3,15 @@ import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 // material ui libs
 import { withStyles } from "@material-ui/core";
-import { Drawer, Divider, Typography } from "@material-ui/core";
-import { List, ListItem, ListItemText, ListSubheader } from "@material-ui/core";
+import { Drawer, Divider, Typography, Collapse } from "@material-ui/core";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListSubheader,
+  ListItemIcon
+} from "@material-ui/core";
+import { StarBorder } from "@material-ui/icons";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
 // libs
 import { toRenderProps } from "recompose";
@@ -74,6 +81,28 @@ class Sidebar extends Component {
                       <ListItemText secondary={text} />
                     </ListItem>
                   ))}
+                  <Collapse timeout="auto" unmountOnExit in>
+                    <List component="div" disablePadding>
+                      <ListItem button className={classes.nestListItem}>
+                        <ListItemText secondary="Understanding layout" />
+                      </ListItem>
+                      <ListItem button className={classes.nestListItem}>
+                        <ListItemText secondary="Density & resolution" />
+                      </ListItem>
+                      <ListItem button className={classes.nestListItem}>
+                        <ListItemText secondary="Responsive layout grid" />
+                      </ListItem>
+                      <ListItem button className={classes.nestListItem}>
+                        <ListItemText secondary="Spacing methods" />
+                      </ListItem>
+                      <ListItem button className={classes.nestListItem}>
+                        <ListItemText secondary="Component behavior" />
+                      </ListItem>
+                      <ListItem button className={classes.nestListItem}>
+                        <ListItemText secondary="Density" />
+                      </ListItem>
+                    </List>
+                  </Collapse>
                 </List>
               </List>
             </Drawer>
@@ -95,7 +124,10 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit
   },
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
+  nestListItem: {
+    paddingLeft: theme.spacing.unit * 6
+  }
 });
 const mapStateToProps = state => {
   return {
