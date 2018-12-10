@@ -151,9 +151,13 @@ const styles = theme => ({
     backgroundColor: theme.palette.common.white
   },
   tabRoot: {
-    [theme.breakpoints.up("xs")]: {
+    [theme.breakpoints.down("xs")]: {
+      fontSize: theme.typography.pxToRem(14),
+      minHeight: 48
+    },
+    [theme.breakpoints.up("sm")]: {
       fontSize: theme.typography.pxToRem(16),
-      minWidth: 100,
+      minWidth: 72,
       minHeight: 64
     },
     "&:focus": {
