@@ -9,22 +9,33 @@ import {
   Typography,
   Hidden,
   Tabs,
-  Tab
+  Tab,
+  Avatar
 } from "@material-ui/core";
+
 import { withStyles } from "@material-ui/core";
-import { Search as SearchIcon, Menu as MenuIcon } from "@material-ui/icons";
+import {
+  Search as SearchIcon,
+  Menu as MenuIcon,
+  Assignment as AssignmentIcon
+} from "@material-ui/icons";
+import { lime } from "@material-ui/core/colors";
 // actions
 import { Actions } from "../../../Redux/Page/actions";
 
 class Header extends Component {
   static propTypes = {
-    active: PropTypes.number
+    active: PropTypes.number,
+    onItemClick: PropTypes.func,
+    hamburgerDisabled: PropTypes.bool
   };
   static defaultProps = {
-    active: 0
+    active: 0,
+    onItemClick: () => {},
+    hamburgerDisabled: false
   };
   _renderNav = ({ disableRipple }) => {
-    const { classes, active } = this.props;
+    const { classes, active, onItemClick } = this.props;
     return (
       <Tabs
         fullWidth
@@ -36,11 +47,20 @@ class Header extends Component {
         value={active}
       >
         <Tab
+          label="Home"
+          classes={{
+            root: classes.tabRoot
+          }}
+          disableRipple={disableRipple}
+          onClick={() => onItemClick("/")}
+        />
+        <Tab
           label="Design"
           classes={{
             root: classes.tabRoot
           }}
           disableRipple={disableRipple}
+          onClick={() => onItemClick("/design")}
         />
         <Tab
           label="Develop"
@@ -48,6 +68,7 @@ class Header extends Component {
             root: classes.tabRoot
           }}
           disableRipple={disableRipple}
+          onClick={() => onItemClick("/develop")}
         />
         <Tab
           label="Tools"
@@ -55,27 +76,32 @@ class Header extends Component {
             root: classes.tabRoot
           }}
           disableRipple={disableRipple}
+          onClick={() => onItemClick("/tools")}
         />
       </Tabs>
     );
   };
   render() {
-    const { classes, toggleSideBar } = this.props;
-    const { active } = this.props;
+    const { classes, toggleSideBar, hamburgerDisabled } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
-            <Hidden mdUp>
-              <IconButton
-                color="inherit"
-                aria-label="Menu"
-                className={classes.menu}
-                onClick={() => toggleSideBar()}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Hidden>
+            {hamburgerDisabled ? null : (
+              <Hidden mdUp>
+                <IconButton
+                  color="inherit"
+                  aria-label="Menu"
+                  className={classes.menu}
+                  onClick={() => toggleSideBar()}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Hidden>
+            )}
+            <Avatar className={classes.greenAvatar} className={classes.logo}>
+              <AssignmentIcon />
+            </Avatar>
             <Hidden smDown>
               <Typography variant="subtitle1" color="inherit" noWrap>
                 MATERIAL DESIGN
@@ -99,6 +125,10 @@ const styles = theme => ({
   root: {},
   menu: {
     marginRight: theme.spacing.unit * 2
+  },
+  logo: {
+    marginRight: theme.spacing.unit * 2,
+    backgroundColor: lime[500]
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,

@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core";
-import { Header, Sidebar, Main } from "../../Components/Layouts/Basic";
+import Header from "./Header";
+import Sidebar from "./Header";
+import Main from "./Header";
 class Layout extends Component {
   render() {
     const { classes } = this.props;
-    return (
-      <div className={classes.root}>
-        <Header />
-        <Sidebar />
-        <Main />
-      </div>
-    );
+    const { children } = this.props;
+    return <div className={classes.root}>{children}</div>;
   }
 }
 const styles = theme => ({

@@ -1,6 +1,13 @@
 import React, { Component } from "react";
-import { Layout } from "../../src/Screens/Home";
-export default class Page extends Component {
+import { compose } from "redux";
+import { withRouter } from "next/router";
+import {
+  Layout,
+  Header,
+  Sidebar,
+  Main
+} from "../../src/Components/Layouts/Basic";
+class Page extends Component {
   static async getInitialProps(props) {
     return {};
   }
@@ -8,6 +15,19 @@ export default class Page extends Component {
     super(props);
   }
   render() {
-    return <Layout />;
+    const { router } = this.props;
+    return (
+      <Layout>
+        <Header
+          active={1}
+          onItemClick={route => {
+            router.push(route);
+          }}
+        />
+        <Sidebar />
+        <Main />
+      </Layout>
+    );
   }
 }
+export default compose(withRouter)(Page);

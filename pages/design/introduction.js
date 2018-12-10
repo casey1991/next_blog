@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout } from "../../src/Screens/Home";
+import { Layout } from "../../src/Components/Layouts/Basic";
 export default class Page extends Component {
   static async getInitialProps(props) {
     return {};
