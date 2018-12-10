@@ -23,7 +23,7 @@ class Header extends Component {
   static defaultProps = {
     active: 0
   };
-  _renderNav = () => {
+  _renderNav = ({ disableRipple }) => {
     const { classes, active } = this.props;
     return (
       <Tabs
@@ -40,18 +40,21 @@ class Header extends Component {
           classes={{
             root: classes.tabRoot
           }}
+          disableRipple={disableRipple}
         />
         <Tab
           label="Develop"
           classes={{
             root: classes.tabRoot
           }}
+          disableRipple={disableRipple}
         />
         <Tab
           label="Tools"
           classes={{
             root: classes.tabRoot
           }}
+          disableRipple={disableRipple}
         />
       </Tabs>
     );
@@ -80,13 +83,13 @@ class Header extends Component {
             </Hidden>
             <div className={classes.grow} />
             {/* except mobile navs */}
-            <Hidden xsDown>{this._renderNav()}</Hidden>
+            <Hidden xsDown>{this._renderNav({ disableRipple: true })}</Hidden>
             <IconButton color="inherit" classes={{ root: classes.searchRoot }}>
               <SearchIcon />
             </IconButton>
           </Toolbar>
           {/* mobile navs */}
-          <Hidden smUp>{this._renderNav()}</Hidden>
+          <Hidden smUp>{this._renderNav({ disableRipple: false })}</Hidden>
         </AppBar>
       </div>
     );
