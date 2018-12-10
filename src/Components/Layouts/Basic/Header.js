@@ -39,7 +39,6 @@ class Header extends Component {
     return (
       <Tabs
         fullWidth
-        centered
         classes={{
           root: classes.tabsRoot,
           indicator: classes.tabsIndicator
