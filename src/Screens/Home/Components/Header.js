@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import {
   AppBar,
   Toolbar,
@@ -16,8 +17,48 @@ import { Search as SearchIcon, Menu as MenuIcon } from "@material-ui/icons";
 import { Actions } from "../../../Redux/Page/actions";
 
 class Header extends Component {
+  static propTypes = {
+    active: PropTypes.number
+  };
+  static defaultProps = {
+    active: 0
+  };
+  _renderNav = () => {
+    const { classes, active } = this.props;
+    return (
+      <Tabs
+        fullWidth
+        centered
+        classes={{
+          root: classes.tabsRoot,
+          indicator: classes.tabsIndicator
+        }}
+        value={active}
+      >
+        <Tab
+          label="Design"
+          classes={{
+            root: classes.tabRoot
+          }}
+        />
+        <Tab
+          label="Develop"
+          classes={{
+            root: classes.tabRoot
+          }}
+        />
+        <Tab
+          label="Tools"
+          classes={{
+            root: classes.tabRoot
+          }}
+        />
+      </Tabs>
+    );
+  };
   render() {
     const { classes, toggleSideBar } = this.props;
+    const { active } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
@@ -38,63 +79,14 @@ class Header extends Component {
               </Typography>
             </Hidden>
             <div className={classes.grow} />
-            <Hidden xsDown>
-              <Typography
-                variant="h6"
-                color="inherit"
-                classes={{ root: classes.navRoot }}
-              >
-                Design
-              </Typography>
-              <Typography
-                variant="h6"
-                color="inherit"
-                classes={{ root: classes.navRoot }}
-              >
-                Develop
-              </Typography>
-              <Typography
-                variant="h6"
-                color="inherit"
-                classes={{ root: classes.navRoot }}
-              >
-                Tools
-              </Typography>
-            </Hidden>
+            {/* except mobile navs */}
+            <Hidden xsDown>{this._renderNav()}</Hidden>
             <IconButton color="inherit" classes={{ root: classes.searchRoot }}>
               <SearchIcon />
             </IconButton>
           </Toolbar>
-          <Hidden smUp>
-            <Tabs
-              fullWidth
-              centered
-              classes={{
-                root: classes.tabsRoot,
-                indicator: classes.tabsIndicator
-              }}
-              value={0}
-            >
-              <Tab
-                label="Design"
-                classes={{
-                  root: classes.tabRoot
-                }}
-              />
-              <Tab
-                label="Develop"
-                classes={{
-                  root: classes.tabRoot
-                }}
-              />
-              <Tab
-                label="Tools"
-                classes={{
-                  root: classes.tabRoot
-                }}
-              />
-            </Tabs>
-          </Hidden>
+          {/* mobile navs */}
+          <Hidden smUp>{this._renderNav()}</Hidden>
         </AppBar>
       </div>
     );
@@ -109,31 +101,27 @@ const styles = theme => ({
     zIndex: theme.zIndex.drawer + 1,
     display: "flex"
   },
+  // spacing
   grow: {
     flexGrow: 1
   },
-  tabsRoot: {},
-  tabRoot: {
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2
-  },
-  navsRoot: {},
-  navRoot: {
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2,
-    fontWeight: "normal",
-    cursor: "pointer"
-  },
+  // search icon
   searchRoot: {
     marginLeft: theme.spacing.unit * 2,
     fontWeight: "normal",
     cursor: "pointer"
   },
+  // tabs
   tabsRoot: {},
   tabsIndicator: {
     backgroundColor: theme.palette.common.white
   },
   tabRoot: {
+    [theme.breakpoints.up("xs")]: {
+      fontSize: theme.typography.pxToRem(16),
+      minWidth: 100,
+      minHeight: 64
+    },
     "&:focus": {
       color: theme.palette.common.white,
       opacity: 1
