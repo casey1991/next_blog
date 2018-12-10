@@ -24,7 +24,6 @@ class Page extends Component {
             router.push(route);
           }}
         />
-        <Sidebar />
         <Main />
       </Layout>
     );

@@ -34,7 +34,7 @@ class Header extends Component {
     onItemClick: () => {},
     hamburgerDisabled: false
   };
-  _renderNav = ({ disableRipple }) => {
+  _renderNav = ({ mobile }) => {
     const { classes, active, onItemClick } = this.props;
     return (
       <Tabs
@@ -45,13 +45,14 @@ class Header extends Component {
           indicator: classes.tabsIndicator
         }}
         value={active}
+        scrollable={mobile ? true : false}
       >
         <Tab
           label="Home"
           classes={{
             root: classes.tabRoot
           }}
-          disableRipple={disableRipple}
+          disableRipple={mobile ? false : true}
           onClick={() => onItemClick("/")}
         />
         <Tab
@@ -59,7 +60,7 @@ class Header extends Component {
           classes={{
             root: classes.tabRoot
           }}
-          disableRipple={disableRipple}
+          disableRipple={mobile ? false : true}
           onClick={() => onItemClick("/design")}
         />
         <Tab
@@ -67,7 +68,7 @@ class Header extends Component {
           classes={{
             root: classes.tabRoot
           }}
-          disableRipple={disableRipple}
+          disableRipple={mobile ? false : true}
           onClick={() => onItemClick("/develop")}
         />
         <Tab
@@ -75,7 +76,7 @@ class Header extends Component {
           classes={{
             root: classes.tabRoot
           }}
-          disableRipple={disableRipple}
+          disableRipple={mobile ? false : true}
           onClick={() => onItemClick("/tools")}
         />
       </Tabs>
@@ -109,13 +110,13 @@ class Header extends Component {
             </Hidden>
             <div className={classes.grow} />
             {/* except mobile navs */}
-            <Hidden xsDown>{this._renderNav({ disableRipple: true })}</Hidden>
+            <Hidden xsDown>{this._renderNav({ mobile: false })}</Hidden>
             <IconButton color="inherit" classes={{ root: classes.searchRoot }}>
               <SearchIcon />
             </IconButton>
           </Toolbar>
           {/* mobile navs */}
-          <Hidden smUp>{this._renderNav({ disableRipple: false })}</Hidden>
+          <Hidden smUp>{this._renderNav({ mobile: true })}</Hidden>
         </AppBar>
       </div>
     );
