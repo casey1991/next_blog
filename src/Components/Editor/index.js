@@ -9,7 +9,7 @@ import {
 } from "draft-js";
 import Immutable from "immutable";
 // block components
-import { Media } from "./Components/Block";
+import { Media, Typography } from "./Components/Block";
 const emptyContentState = convertFromRaw({
   entityMap: {},
   blocks: [
@@ -20,11 +20,6 @@ const emptyContentState = convertFromRaw({
       entityRanges: []
     }
   ]
-});
-const blockRenderMap = Immutable.Map({
-  section: {
-    element: "section"
-  }
 });
 class RichEditor extends Component {
   constructor(props) {
@@ -40,7 +35,7 @@ class RichEditor extends Component {
     this.setState({
       editorState: RichUtils.toggleBlockType(
         this.state.editorState,
-        "block_media"
+        "header-six"
       )
     });
   }
@@ -59,7 +54,34 @@ class RichEditor extends Component {
   };
   render() {
     const { editorState } = this.state;
-    const blockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
+    const blockRenderMap = DefaultDraftBlockRenderMap.merge(
+      Immutable.Map({
+        "header-one": {
+          element: "h1",
+          wrapper: <Typography variant="h1" />
+        },
+        "header-two": {
+          element: "h2",
+          wrapper: <Typography variant="h2" />
+        },
+        "header-three": {
+          element: "h3",
+          wrapper: <Typography variant="h3" />
+        },
+        "header-four": {
+          element: "h4",
+          wrapper: <Typography variant="h4" />
+        },
+        "header-five": {
+          element: "h5",
+          wrapper: <Typography variant="h5" />
+        },
+        "header-six": {
+          element: "h6",
+          wrapper: <Typography variant="h6" />
+        }
+      })
+    );
     return (
       <div>
         <Editor
