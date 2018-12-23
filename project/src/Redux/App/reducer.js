@@ -10,30 +10,36 @@ const defaultState = Immutable({
   ],
   sidebar: [
     {
-      name: "Material System",
-      type: "item",
-      items: [{ name: "Introduction" }, { name: "Material studies" }]
+      title: "Material System",
+      type: "header",
+      collapsible: false,
+      sections: [
+        { title: "Introduction", path: "/cattery/introduction" },
+        { title: "Material studies", path: "/cattery/material-studies" }
+      ]
     },
     {
       type: "divider"
     },
     {
-      name: "Material Foundation",
-      type: "item",
-      items: [
-        { name: "Foundation overview", type: "item" },
-        { name: "Environment", type: "item" },
-        { name: "Layout", type: "item" },
+      title: "Material Foundation",
+      type: "header",
+      collapsible: false,
+      sections: [
+        { title: "Foundation overview", type: "item" },
+        { title: "Environment", type: "item" },
+        { title: "Layout", type: "item" },
         {
-          name: "Navigation",
+          title: "Navigation",
           type: "item",
-          items: [
-            { name: "Understanding layout", type: "item" },
-            { name: "Density & resolution", type: "item" },
-            { name: "Responsive layout grid", type: "item" },
-            { name: "Spacing methods", type: "item" },
-            { name: "Component behavior", type: "item" },
-            { name: "Density", type: "item" }
+          open: false,
+          sections: [
+            { title: "Understanding layout", type: "item", level: 2 },
+            { title: "Density & resolution", type: "item", level: 2 },
+            { title: "Responsive layout grid", type: "item", level: 2 },
+            { title: "Spacing methods", type: "item", level: 2 },
+            { title: "Component behavior", type: "item", level: 2 },
+            { title: "Density", type: "item", level: 2 }
           ]
         }
       ]

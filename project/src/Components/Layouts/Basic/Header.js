@@ -49,6 +49,7 @@ class Header extends Component {
       >
         {map(menus, menu => (
           <Tab
+            key={menu.name}
             label={menu.name}
             classes={{
               root: classes.tabRoot

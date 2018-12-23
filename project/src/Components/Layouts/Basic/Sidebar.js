@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { withRouter } from "next/router";
 // material ui libs
-import { withStyles } from "@material-ui/core";
+import { withStyles, withTheme } from "@material-ui/core";
 import { Drawer, Divider, Typography, Collapse } from "@material-ui/core";
 import {
   List,
@@ -11,28 +12,59 @@ import {
   ListSubheader,
   ListItemIcon
 } from "@material-ui/core";
-import { StarBorder } from "@material-ui/icons";
 import withWidth, { isWidthUp, isWidthDown } from "@material-ui/core/withWidth";
+// components
+import Accordion from "../../Accordion";
 // libs
 import { toRenderProps } from "recompose";
 // actions
 import { Actions } from "../../../Redux/Page/actions";
-
 const WithWidth = toRenderProps(withWidth());
 const drawerWidth = 280;
 class Sidebar extends Component {
-  _renderDivider = () => {
-    return <Divider />;
+  _calculateItemLeftPadding = level => {
+    const { theme } = this.props;
+    return level * theme.spacing.unit * 3;
   };
-  _returnItem = item => {
+  _renderDivider = () => {
+    const { theme } = this.props;
     return (
-      <ListItem button key={item.name}>
-        <ListItemText secondary={item.name} />
+      <Divider
+        style={{
+          marginTop: theme.spacing.unit * 3,
+          marginBottom: theme.spacing.unit * 3
+        }}
+      />
+    );
+  };
+  _renderItemText = (item, header) => {
+    if (header) return <ListItemText primary={item.title} />;
+    return <ListItemText secondary={item.title} />;
+  };
+  _returnItem = (item, { toggle }) => {
+    const { router } = this.props;
+    if (item.type === "none") return null;
+    if (item.type === "divider") return this._renderDivider();
+    return (
+      <ListItem
+        button={item.type !== "header"}
+        key={item.title}
+        onClick={() => {
+          toggle();
+          if (item.path) {
+            router.push(item.path);
+          }
+        }}
+        style={{
+          paddingLeft: this._calculateItemLeftPadding(item.level || 1)
+        }}
+      >
+        {this._renderItemText(item, item.type === "header" ? true : false)}
       </ListItem>
     );
   };
   render() {
-    const { classes, visible, toggleSideBar } = this.props;
+    const { classes, visible, toggleSideBar, sidebar } = this.props;
     return (
       <WithWidth>
         {({ width }) => {
@@ -49,72 +81,14 @@ class Sidebar extends Component {
             >
               <div className={classes.toolbar} />
               <Divider />
-              <List>
-                <List
-                  subheader={
-                    <ListSubheader>
-                      <Typography
-                        variant="subtitle1"
-                        className={classes.drawerSubheader}
-                      >
-                        Material System
-                      </Typography>
-                    </ListSubheader>
-                  }
-                >
-                  {["Introduction", "Material studies"].map(text => (
-                    <ListItem button key={text}>
-                      <ListItemText secondary={text} />
-                    </ListItem>
-                  ))}
-                </List>
-                <Divider />
-                <List
-                  subheader={
-                    <ListSubheader>
-                      <Typography
-                        variant="subtitle1"
-                        className={classes.drawerSubheader}
-                      >
-                        Material Foundation
-                      </Typography>
-                    </ListSubheader>
-                  }
-                >
-                  {[
-                    "Foundation overview",
-                    "Environment",
-                    "Layout",
-                    "Navigation"
-                  ].map(text => (
-                    <ListItem button key={text}>
-                      <ListItemText secondary={text} />
-                    </ListItem>
-                  ))}
-                  <Collapse timeout="auto" unmountOnExit in>
-                    <List component="div" disablePadding>
-                      <ListItem button className={classes.nestListItem}>
-                        <ListItemText secondary="Understanding layout" />
-                      </ListItem>
-                      <ListItem button className={classes.nestListItem}>
-                        <ListItemText secondary="Density & resolution" />
-                      </ListItem>
-                      <ListItem button className={classes.nestListItem}>
-                        <ListItemText secondary="Responsive layout grid" />
-                      </ListItem>
-                      <ListItem button className={classes.nestListItem}>
-                        <ListItemText secondary="Spacing methods" />
-                      </ListItem>
-                      <ListItem button className={classes.nestListItem}>
-                        <ListItemText secondary="Component behavior" />
-                      </ListItem>
-                      <ListItem button className={classes.nestListItem}>
-                        <ListItemText secondary="Density" />
-                      </ListItem>
-                    </List>
-                  </Collapse>
-                </List>
-              </List>
+              <Accordion
+                data={{
+                  open: true,
+                  type: "none",
+                  sections: sidebar
+                }}
+                renderHeader={this._returnItem}
+              />
             </Drawer>
           );
         }}
@@ -130,18 +104,12 @@ const styles = theme => ({
   drawerPaper: {
     width: drawerWidth
   },
-  drawerSubheader: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit
-  },
-  toolbar: theme.mixins.toolbar,
-  nestListItem: {
-    paddingLeft: theme.spacing.unit * 6
-  }
+  toolbar: theme.mixins.toolbar
 });
 const mapStateToProps = state => {
   return {
-    visible: state.page.common.sideBarVisible
+    visible: state.page.common.sideBarVisible,
+    sidebar: state.app.sidebar
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -154,8 +122,9 @@ const mapDispatchToProps = dispatch => {
 };
 export default compose(
   withStyles(styles),
+  withRouter,
   connect(
     mapStateToProps,
     mapDispatchToProps
   )
-)(Sidebar);
+)(withTheme()(Sidebar));
