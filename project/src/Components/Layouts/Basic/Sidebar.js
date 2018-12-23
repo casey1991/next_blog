@@ -21,6 +21,16 @@ import { Actions } from "../../../Redux/Page/actions";
 const WithWidth = toRenderProps(withWidth());
 const drawerWidth = 280;
 class Sidebar extends Component {
+  _renderDivider = () => {
+    return <Divider />;
+  };
+  _returnItem = item => {
+    return (
+      <ListItem button key={item.name}>
+        <ListItemText secondary={item.name} />
+      </ListItem>
+    );
+  };
   render() {
     const { classes, visible, toggleSideBar } = this.props;
     return (
