@@ -13,6 +13,7 @@ import {
   Avatar
 } from "@material-ui/core";
 
+import { map } from "lodash";
 import { withStyles } from "@material-ui/core";
 import {
   Search as SearchIcon,
@@ -35,7 +36,7 @@ class Header extends Component {
     hamburgerDisabled: false
   };
   _renderNav = ({ mobile }) => {
-    const { classes, active, onItemClick } = this.props;
+    const { classes, active, onItemClick, menus } = this.props;
     return (
       <Tabs
         fullWidth
@@ -46,38 +47,16 @@ class Header extends Component {
         value={active}
         scrollable={mobile ? true : false}
       >
-        <Tab
-          label="Home"
-          classes={{
-            root: classes.tabRoot
-          }}
-          disableRipple={mobile ? false : true}
-          onClick={() => onItemClick("/")}
-        />
-        <Tab
-          label="Design"
-          classes={{
-            root: classes.tabRoot
-          }}
-          disableRipple={mobile ? false : true}
-          onClick={() => onItemClick("/design")}
-        />
-        <Tab
-          label="Develop"
-          classes={{
-            root: classes.tabRoot
-          }}
-          disableRipple={mobile ? false : true}
-          onClick={() => onItemClick("/develop")}
-        />
-        <Tab
-          label="Tools"
-          classes={{
-            root: classes.tabRoot
-          }}
-          disableRipple={mobile ? false : true}
-          onClick={() => onItemClick("/tools")}
-        />
+        {map(menus, menu => (
+          <Tab
+            label={menu.name}
+            classes={{
+              root: classes.tabRoot
+            }}
+            disableRipple={mobile ? false : true}
+            onClick={() => onItemClick(menu.path)}
+          />
+        ))}
       </Tabs>
     );
   };
@@ -170,7 +149,9 @@ const styles = theme => ({
   }
 });
 const mapStateToProps = state => {
-  return {};
+  return {
+    menus: state.app.menus
+  };
 };
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(

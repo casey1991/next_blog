@@ -57,7 +57,6 @@ class RichEditor extends Component {
     }
   };
   render() {
-    console.log("visible Section Bounds: ", getVisibleSelectionRect(window));
     const { editorState } = this.state;
     const blockRenderMap = DefaultDraftBlockRenderMap.merge(
       Immutable.Map({
