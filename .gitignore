@@ -1,2 +1,5 @@
 # ignore project
 /project/node_modules
+/project/.next
+# ignore vscode
+/vscode
