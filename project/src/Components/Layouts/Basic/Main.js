@@ -5,9 +5,9 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 class Main extends Component {
   render() {
-    const { classes, children } = this.props;
+    const { classes, children, style } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.root} style={style}>
         <div className={classes.content}>{children}</div>
       </div>
     );
