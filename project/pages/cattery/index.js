@@ -7,12 +7,19 @@ import {
   Sidebar,
   Main
 } from "../../src/Components/Layouts/Basic";
+
+// temp
+import gql from "graphql-tag";
+import { graphql, withApollo } from "react-apollo";
 class Page extends Component {
   static async getInitialProps(props) {
     return {};
   }
   constructor(props) {
     super(props);
+  }
+  componentDidMount() {
+    console.log(this.props.client);
   }
   render() {
     const { router } = this.props;
@@ -30,4 +37,15 @@ class Page extends Component {
     );
   }
 }
-export default compose(withRouter)(Page);
+export default compose(
+  withRouter,
+  withApollo,
+  graphql(gql`
+    query {
+      cats {
+        id
+        name
+      }
+    }
+  `)
+)(Page);

@@ -5,9 +5,10 @@ import fetch from "isomorphic-unfetch";
 if (!process.browser) {
   global.fetch = fetch;
 }
+const httpLink = new HttpLink({ uri: "http://localhost:4444/graphql" });
 export const getClient = () => {
   return new ApolloClient({
-    link: new HttpLink(),
+    link: httpLink,
     ssrMode: !process.browser,
     cache: new InMemoryCache()
   });
