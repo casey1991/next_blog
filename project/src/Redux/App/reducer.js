@@ -19,6 +19,7 @@ const defaultState = Immutable({
       ]
     },
     {
+      title: "divider1",
       type: "divider"
     },
     {

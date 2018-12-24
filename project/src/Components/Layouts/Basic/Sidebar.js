@@ -40,7 +40,6 @@ class Sidebar extends Component {
         break;
     }
     const result = theme.spacing.unit * 3 * (innerLevel - 3 + 1);
-    console.log(level, " : ", result);
     return result;
   };
   _renderDivider = () => {

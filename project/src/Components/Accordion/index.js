@@ -45,14 +45,16 @@ class Accordion extends Component {
           toggle: collapsible ? this._toggle : () => {}
         })}
         <Collapse in={open}>
-          {map(data.sections, section => (
-            <Accordion
-              level={level}
-              data={section}
-              renderHeader={renderHeader}
-              key={section.title}
-            />
-          ))}
+          {map(data.sections, section => {
+            return (
+              <Accordion
+                key={section.title}
+                level={level}
+                data={section}
+                renderHeader={renderHeader}
+              />
+            );
+          })}
         </Collapse>
       </div>
     );
