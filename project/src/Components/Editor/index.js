@@ -11,6 +11,8 @@ import {
 import Immutable from "immutable";
 // block components
 import { Media, Typography } from "./Components/Block";
+// sub components
+import Toolbar from "./Components/Toolbar";
 const emptyContentState = convertFromRaw({
   entityMap: {},
   blocks: [
@@ -26,24 +28,36 @@ class RichEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: EditorState.createWithContent(emptyContentState)
+      editorState: EditorState.createWithContent(emptyContentState),
+      cursorPosition: {
+        left: null,
+        top: null
+      },
+      sectionHeight: 24
     };
     this._editor = React.createRef();
   }
   componentDidMount() {
     // focus editor when component did mount
     this._editor.current.focus();
-    this.setState({
-      position: {},
-      editorState: RichUtils.toggleBlockType(
-        this.state.editorState,
-        "header-six"
-      )
-    });
   }
   _onChange = editorState => {
     this.setState({ editorState });
+    if (process.browser) {
+      // in browser
+      const cursor = getVisibleSelectionRect(window);
+      console.log(cursor);
+      if (cursor)
+        this.setState({
+          cursorPosition: {
+            left: cursor.left,
+            top: cursor.top
+          },
+          sectionHeight: cursor.height
+        });
+    }
   };
+  _getSectionRect = () => {};
   _handleKeyCommand = command => {
     return getDefaultKeyBinding(command);
   };
@@ -61,33 +75,31 @@ class RichEditor extends Component {
     const blockRenderMap = DefaultDraftBlockRenderMap.merge(
       Immutable.Map({
         "header-one": {
-          element: "h1",
           wrapper: <Typography variant="h1" />
         },
         "header-two": {
-          element: "h2",
           wrapper: <Typography variant="h2" />
         },
         "header-three": {
-          element: "h3",
           wrapper: <Typography variant="h3" />
         },
         "header-four": {
-          element: "h4",
           wrapper: <Typography variant="h4" />
         },
         "header-five": {
-          element: "h5",
           wrapper: <Typography variant="h5" />
         },
         "header-six": {
-          element: "h6",
           wrapper: <Typography variant="h6" />
         }
       })
     );
     return (
       <div>
+        <Toolbar
+          position={this.state.cursorPosition}
+          sectionHeight={this.state.sectionHeight}
+        />
         <Editor
           ref={this._editor}
           editorState={editorState}
