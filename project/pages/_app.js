@@ -9,6 +9,9 @@ import getMaterialContext from "../lib/context/getMaterialContext";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 import makeStore from "../src/Redux";
+// apollo config
+import { ApolloProvider } from "react-apollo";
+import { getClient } from "../lib/apollo";
 class CApp extends App {
   constructor(props) {
     super(props);
@@ -37,9 +40,13 @@ class CApp extends App {
           >
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <Provider store={store}>
-              <Component {...pageProps} pageContext={this.pageContext} />
-            </Provider>
+            {/* apollo provider */}
+            <ApolloProvider client={getClient()}>
+              {/* redux provider */}
+              <Provider store={store}>
+                <Component {...pageProps} pageContext={this.pageContext} />
+              </Provider>
+            </ApolloProvider>
           </MuiThemeProvider>
         </JssProvider>
       </Container>
