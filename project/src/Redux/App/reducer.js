@@ -34,12 +34,12 @@ const defaultState = Immutable({
           type: "item",
           open: false,
           sections: [
-            { title: "Understanding layout", type: "item", level: 2 },
-            { title: "Density & resolution", type: "item", level: 2 },
-            { title: "Responsive layout grid", type: "item", level: 2 },
-            { title: "Spacing methods", type: "item", level: 2 },
-            { title: "Component behavior", type: "item", level: 2 },
-            { title: "Density", type: "item", level: 2 }
+            { title: "Understanding layout", type: "item" },
+            { title: "Density & resolution", type: "item" },
+            { title: "Responsive layout grid", type: "item" },
+            { title: "Spacing methods", type: "item" },
+            { title: "Component behavior", type: "item" },
+            { title: "Density", type: "item" }
           ]
         }
       ]

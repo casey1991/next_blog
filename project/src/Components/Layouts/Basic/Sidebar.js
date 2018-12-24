@@ -24,7 +24,24 @@ const drawerWidth = 280;
 class Sidebar extends Component {
   _calculateItemLeftPadding = level => {
     const { theme } = this.props;
-    return level * theme.spacing.unit * 3;
+    let innerLevel = 1;
+    switch (level) {
+      case 1:
+        innerLevel = 3;
+        break;
+      case 2:
+        innerLevel = 3;
+        break;
+      case 3:
+        innerLevel = 3;
+        break;
+      default:
+        innerLevel = level;
+        break;
+    }
+    const result = theme.spacing.unit * 3 * (innerLevel - 3 + 1);
+    console.log(level, " : ", result);
+    return result;
   };
   _renderDivider = () => {
     const { theme } = this.props;
@@ -41,7 +58,7 @@ class Sidebar extends Component {
     if (header) return <ListItemText primary={item.title} />;
     return <ListItemText secondary={item.title} />;
   };
-  _returnItem = (item, { toggle }) => {
+  _returnItem = (item, { toggle, level }) => {
     const { router } = this.props;
     if (item.type === "none") return null;
     if (item.type === "divider") return this._renderDivider();
@@ -56,7 +73,7 @@ class Sidebar extends Component {
           }
         }}
         style={{
-          paddingLeft: this._calculateItemLeftPadding(item.level || 1)
+          paddingLeft: this._calculateItemLeftPadding(level)
         }}
       >
         {this._renderItemText(item, item.type === "header" ? true : false)}

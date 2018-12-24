@@ -11,15 +11,18 @@ import { Collapse } from "@material-ui/core";
 class Accordion extends Component {
   static propTypes = {
     data: PropTypes.object,
+    level: PropTypes.number,
     renderHeader: PropTypes.func
   };
   static defaultProps = {
     data: {},
+    level: 0,
     renderHeader: null
   };
   constructor(props) {
     super(props);
     this.state = {
+      level: props.level + 1,
       open: isUndefined(props.data.open) ? true : props.data.open,
       collapsible: isUndefined(props.data.collapsible)
         ? true
@@ -33,15 +36,18 @@ class Accordion extends Component {
   };
   render() {
     const { data, renderHeader } = this.props;
-    const { open, collapsible } = this.state;
+    const { open, collapsible, level } = this.state;
+    // console.log(level);
     return (
       <div>
         {renderHeader(data, {
+          level: level,
           toggle: collapsible ? this._toggle : () => {}
         })}
         <Collapse in={open}>
           {map(data.sections, section => (
             <Accordion
+              level={level}
               data={section}
               renderHeader={renderHeader}
               key={section.title}
