@@ -4,6 +4,7 @@ module.exports = {
     PORT: 3000
   },
   publicRuntimeConfig: {
-    STATIC_FOLDER: "/static"
+    STATIC_FOLDER: "/static",
+    API_URL: "http://localhost:4444/graphql"
   }
 };
