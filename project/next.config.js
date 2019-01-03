@@ -5,6 +5,7 @@ module.exports = {
   },
   publicRuntimeConfig: {
     STATIC_FOLDER: "/static",
-    API_URL: "http://localhost:4444/graphql"
+    API_URL: "http://localhost:4444/graphql",
+    SOCKET_URL: "ws://localhost:4444/graphql"
   }
 };
