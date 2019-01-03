@@ -19,7 +19,7 @@ import {
   withStyles
 } from "@material-ui/core";
 import { CloudDownload as DownloadIcon } from "@material-ui/icons";
-class Document extends Component {
+class Goods extends Component {
   constructor(props) {
     super(props);
     this._table = React.createRef();
@@ -187,4 +187,4 @@ export default compose(
       }
     }
   )
-)(Document);
+)(Goods);

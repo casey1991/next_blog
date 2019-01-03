@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { compose } from "redux";
 import { withRouter } from "next/router";
-import { Layout, Header, Main, Document } from "../../src/Screens/Document";
+import { Layout, Header, Main, Goodss } from "../../src/Screens/Goods";
 
 class Page extends Component {
   static async getInitialProps(props) {
@@ -22,7 +22,7 @@ class Page extends Component {
           }}
         />
         <Main style={{ paddingTop: 120 }}>
-          <Document />
+          <Goodss />
         </Main>
       </Layout>
     );
