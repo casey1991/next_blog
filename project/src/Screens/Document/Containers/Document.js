@@ -106,7 +106,7 @@ class Document extends Component {
           <DownloadIcon />
         </Fab>
         <RootRef ref={this._table}>
-          <Table>
+          <Table className={classes.table}>
             <TableHead>
               <TableRow>
                 <TableCell>Dessert (100g serving)</TableCell>
@@ -118,6 +118,24 @@ class Document extends Component {
             </TableHead>
             <TableBody>
               <TableRow key={1}>
+                <TableCell component="th" scope="row">
+                  HHH
+                </TableCell>
+                <TableCell align="right">row.calories</TableCell>
+                <TableCell align="right">row.fat</TableCell>
+                <TableCell align="right">row.carbs</TableCell>
+                <TableCell align="right">row.protein</TableCell>
+              </TableRow>
+              <TableRow key={2}>
+                <TableCell component="th" scope="row">
+                  HHH
+                </TableCell>
+                <TableCell align="right">row.calories</TableCell>
+                <TableCell align="right">row.fat</TableCell>
+                <TableCell align="right">row.carbs</TableCell>
+                <TableCell align="right">row.protein</TableCell>
+              </TableRow>
+              <TableRow key={3}>
                 <TableCell component="th" scope="row">
                   HHH
                 </TableCell>
@@ -139,6 +157,9 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2,
     bottom: 0,
     right: 0
+  },
+  table: {
+    backgroundColor: "#fff"
   }
 });
 const mapStateToProps = state => ({});
