@@ -4,9 +4,25 @@ import { connect } from "react-redux";
 import XLSX from "xlsx";
 import gql from "graphql-tag";
 import { graphql } from "react-apollo";
+import { hasIn } from "lodash";
+import * as FileSaver from "file-saver";
+// ui
+
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Fab,
+  RootRef,
+  withStyles
+} from "@material-ui/core";
+import { CloudDownload as DownloadIcon } from "@material-ui/icons";
 class Document extends Component {
   constructor(props) {
     super(props);
+    this._table = React.createRef();
   }
   _onDrop = ev => {
     ev.preventDefault();
@@ -54,26 +70,81 @@ class Document extends Component {
     if (rABS) reader.readAsBinaryString(file);
     else reader.readAsArrayBuffer(file);
   };
+  _downloadTable = () => {
+    const canParse = hasIn(this._table, "current.ref");
+    if (canParse) {
+      const excelBook = XLSX.utils.table_to_book(this._table.current.ref);
+      const wb = XLSX.write(excelBook, {
+        type: "xlsx",
+        bookSST: true,
+        type: "binary"
+      });
+      function s2ab(s) {
+        const buf = new ArrayBuffer(s.length);
+        const view = new Uint8Array(buf);
+        for (let i = 0; i < s.length; i++) {
+          view[i] = s.charCodeAt(i) & 0xff;
+        }
+        return buf;
+      }
+      FileSaver.saveAs(
+        new Blob([s2ab(wb)], { type: "application/octet.stream" }),
+        "test.xlsx"
+      );
+    }
+  };
   render() {
+    const { classes } = this.props;
     return (
-      <div
-        ref={this._document}
-        style={{
-          height: 100,
-          backgroundColor: "#666",
-          marginTop: 120
-        }}
-        onDrop={this._onDrop}
-        onDragOver={this._onDragOver}
-      >
-        DROP xlsx here
+      <div>
+        <Fab
+          color="primary"
+          aria-label="Download"
+          onClick={this._downloadTable}
+          className={classes.fab}
+        >
+          <DownloadIcon />
+        </Fab>
+        <RootRef ref={this._table}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Dessert (100g serving)</TableCell>
+                <TableCell align="right">Calories</TableCell>
+                <TableCell align="right">Fat (g)</TableCell>
+                <TableCell align="right">Carbs (g)</TableCell>
+                <TableCell align="right">Protein (g)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow key={1}>
+                <TableCell component="th" scope="row">
+                  HHH
+                </TableCell>
+                <TableCell align="right">row.calories</TableCell>
+                <TableCell align="right">row.fat</TableCell>
+                <TableCell align="right">row.carbs</TableCell>
+                <TableCell align="right">row.protein</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </RootRef>
       </div>
     );
   }
 }
+const styles = theme => ({
+  fab: {
+    position: "absolute",
+    margin: theme.spacing.unit * 2,
+    bottom: 0,
+    right: 0
+  }
+});
 const mapStateToProps = state => ({});
 const mapDispatchToProps = () => ({});
 export default compose(
+  withStyles(styles),
   connect(
     mapStateToProps,
     mapDispatchToProps

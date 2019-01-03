@@ -21,7 +21,7 @@ class Page extends Component {
             router.push(route);
           }}
         />
-        <Main>
+        <Main style={{ paddingTop: 120 }}>
           <Document />
         </Main>
       </Layout>
