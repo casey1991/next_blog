@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import XLSX from "xlsx";
 import gql from "graphql-tag";
 import { graphql } from "react-apollo";
-import { hasIn, map, keys, values } from "lodash";
+import { hasIn, map, keys, values, assign } from "lodash";
 import * as FileSaver from "file-saver";
 // ui
 
@@ -24,6 +24,35 @@ class Goodss extends Component {
   constructor(props) {
     super(props);
     this._table = React.createRef();
+    this._subscribeToMoreGoodsHandler = null;
+  }
+  componentDidMount() {
+    const { subscribeToMoreGoods } = this.props;
+    this._subscribeToMoreGoodsHandler = subscribeToMoreGoods({
+      document: gql`
+        subscription {
+          goodsCreated {
+            id
+            name
+            amount
+            price
+          }
+        }
+      `,
+      updateQuery: (previousResult, { subscriptionData }) => {
+        if (!subscriptionData.data) return previousResult;
+        const goods = subscriptionData.data.goodsCreated;
+        const newGoodss = assign({}, previousResult, {
+          goodss: [...previousResult.goodss, goods]
+        });
+        return newGoodss;
+      }
+    });
+  }
+  componentWillUnmount() {
+    if (this._subscribeToMoreGoodsHandler) {
+      this._subscribeToMoreGoodsHandler();
+    }
   }
   _onDrop = ev => {
     ev.preventDefault();
@@ -175,8 +204,8 @@ export default compose(
       }
     `,
     {
-      props: ({ data: { goodss } }) => {
-        return { goodss };
+      props: ({ data: { goodss, subscribeToMore } }) => {
+        return { goodss, subscribeToMoreGoods: subscribeToMore };
       }
     }
   )
